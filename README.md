@@ -1,4 +1,4 @@
-# Introduction Machine Learning for neuroimaging with nilearn and scikit-learn
+# Introduction to Machine Learning for neuroimaging with nilearn and scikit-learn
 ## Resources @ MAIN 2021
 
 These two tutorials will introduce you to the [nilearn](https://nilearn.github.io/stable/index.html) library to manipulate and process fMRI data, and to [scikit-learn](https://scikit-learn.org/stable/) to apply machine learning techniques on your data.
