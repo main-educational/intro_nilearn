@@ -11,7 +11,7 @@ python 3 on any OS.
 ## Setup
 
 We encourage you to use a virtual environment for this tutorial (and for all your projects, that's a good practice). To do this, run the following command in your terminal, it will create the
-environment in a folder names `env_tuto`:
+environment in a folder named `env_tuto`:
 ```
 python3 -m venv env_tuto
 ```
