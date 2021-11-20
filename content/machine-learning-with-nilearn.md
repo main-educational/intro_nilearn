@@ -22,7 +22,7 @@ warnings.filterwarnings('ignore')
 %matplotlib inline
 ```
 
-# Predict age from resting state fMRI (rs-fMRI)
+# Predict age from resting state fMRI (rs-fMRI) with [`scikit-learn`](https://scikit-learn.org)
 
 We will integrate what we've learned in the previous sections to extract data from *several* rs-fmri images, and use that data as features in a machine learning model
 

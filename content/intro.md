@@ -7,9 +7,6 @@ to apply machine learning techniques on your data.
 It was developed for use at the [Montreal AI and Neuroscience (MAIN)](https://www.main2021.org/) 
 conference in November 2021.
 
-It is rendered here using [Jupyter Book](https://github.com/jupyter/jupyter-book),
-<!-- with compute infrastructure provided by the [Canadian Open Neuroscience Platform (CONP)](http://conp.ca). -->
-
 ### Pre-requisites
 
 You need to have access to a terminal with Python 3. 
@@ -19,7 +16,7 @@ is a guide to install python 3 on any OS.
 
 ## Setup
 
-Firstly, clone this repository to your machine and navigate to the directory:
+Firstly, clone/download this repository to your machine and navigate to the directory.
 
 ```bash
 git clone https://github.com/mtl-AI-neuroscience/intro_ML.git
@@ -58,6 +55,9 @@ jupyter notebook
 This tutorial was presented by 
 [François Paugam](https://github.com/FrancoisPgm),
 and [Hao-Ting Wang](https://wanghaoting.com/).
+
+It is rendered here using [Jupyter Book](https://github.com/jupyter/jupyter-book),
+<!-- with compute infrastructure provided by the [Canadian Open Neuroscience Platform (CONP)](http://conp.ca). -->
 
 The content of notebook was iterated based on work from the past presentors:
 [Pierre Bellec](https://simexp.github.io/lab-website/),
