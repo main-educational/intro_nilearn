@@ -1,0 +1,77 @@
+
+@ARTICLE{Dadi_2019,
+title    = "Benchmarking functional connectome-based predictive models for
+resting-state {fMRI}",
+author   = "Dadi, Kamalaker and Rahim, Mehdi and Abraham, Alexandre and
+Chyzhyk, Darya and Milham, Michael and Thirion, Bertrand and
+Varoquaux, Ga{\"e}l and {Alzheimer's Disease Neuroimaging
+        Initiative}",
+abstract = "Functional connectomes reveal biomarkers of individual
+psychological or clinical traits. However, there is great
+variability in the analytic pipelines typically used to derive
+them from rest-fMRI cohorts. Here, we consider a specific type of
+studies, using predictive models on the edge weights of
+functional connectomes, for which we highlight the best modeling
+choices. We systematically study the prediction performances of
+models in 6 different cohorts and a total of 2000 individuals,
+encompassing neuro-degenerative (Alzheimer's, Post-traumatic
+stress disorder), neuro-psychiatric (Schizophrenia, Autism), drug
+impact (Cannabis use) clinical settings and psychological trait
+(fluid intelligence). The typical prediction procedure from
+rest-fMRI consists of three main steps: defining brain regions,
+representing the interactions, and supervised learning. For each
+step we benchmark typical choices: 8 different ways of defining
+regions -either pre-defined or generated from the rest-fMRI data-
+3 measures to build functional connectomes from the extracted
+time-series, and 10 classification models to compare functional
+interactions across subjects. Our benchmarks summarize more than
+240 different pipelines and outline modeling choices that show
+consistent prediction performances in spite of variations in the
+populations and sites. We find that regions defined from
+functional data work best; that it is beneficial to capture
+between-region interactions with tangent-based parametrization of
+covariances, a midway between correlations and partial
+correlation; and that simple linear predictors such as a logistic
+regression give the best predictions. Our work is a step forward
+to establishing reproducible imaging-based biomarkers for
+clinical settings.",
+journal  = "Neuroimage",
+volume   =  192,
+pages    = "115--134",
+month    =  may,
+year     =  2019,
+keywords = "Classification; Functional connectomes; Population study;
+Predictive modeling; Resting-state fMRI",
+language = "en"
+}
+
+
+@INPROCEEDINGS{Varoquaux_2011,
+        title     = "Multi-subject Dictionary Learning to Segment an Atlas of Brain
+        Spontaneous Activity",
+        booktitle = "Information Processing in Medical Imaging",
+        author    = "Varoquaux, Gael and Gramfort, Alexandre and Pedregosa, Fabian
+        and Michel, Vincent and Thirion, Bertrand",
+        abstract  = "Fluctuations in brain on-going activity can be used to reveal
+        its intrinsic functional organization. To mine this information,
+        we give a new hierarchical probabilistic model for brain
+        activity patterns that does not require an experimental design
+        to be specified. We estimate this model in the dictionary
+        learning framework, learning simultaneously latent spatial maps
+        and the corresponding brain activity time-series. Unlike
+        previous dictionary learning frameworks, we introduce an
+        explicit difference between subject-level spatial maps and their
+        corresponding population-level maps, forming an atlas. We give a
+        novel algorithm using convex optimization techniques to solve
+        efficiently this problem with non-smooth penalties well-suited
+        to image denoising. We show on simulated data that it can
+        recover population-level maps as well as subject specificities.
+        On resting-state fMRI data, we extract the first atlas of
+        spontaneous brain activity and show how it defines a
+        subject-specific functional parcellation of the brain in
+        localized regions.",
+        publisher = "Springer Berlin Heidelberg",
+        pages     = "562--573",
+        year      =  2011
+}
+
