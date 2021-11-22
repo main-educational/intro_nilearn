@@ -1,0 +1,1202 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Predict age from resting state fMRI (rs-fMRI) with scikit-learn &#8212; MAIN2021: Nilearn</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Functional connectiviy with nilearn" href="functional-connectivity-with-nilearn.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/nilearn-logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">MAIN2021: Nilearn</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="functional-connectivity-with-nilearn.html">
+   Functional connectiviy with
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     nilearn
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Predict age from resting state fMRI (rs-fMRI) with
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     scikit-learn
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="_sources/machine-learning-with-nilearn.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/machine-learning-with-nilearn.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/mtl-AI-neuroscience/intro_ML/main?urlpath=tree/content/machine-learning-with-nilearn.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-the-data">
+   Load the data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extract-features">
+   Extract features
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-y-our-target-and-assess-its-distribution">
+   Get Y (our target) and assess its distribution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prepare-data-for-machine-learning">
+   Prepare data for machine learning
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-your-first-model">
+   Run your first model!
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tweak-your-model">
+   Tweak your model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#can-our-model-classify-childrens-from-adults-in-completely-un-seen-data">
+   Can our model classify childrens from adults in completely un-seen data?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#interpreting-model-feature-importances">
+   Interpreting model feature importances
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s keep our notebook clean, so it&#39;s a little more readable!</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="predict-age-from-resting-state-fmri-rs-fmri-with-scikit-learn">
+<h1>Predict age from resting state fMRI (rs-fMRI) with <a class="reference external" href="https://scikit-learn.org"><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code></a><a class="headerlink" href="#predict-age-from-resting-state-fmri-rs-fmri-with-scikit-learn" title="Permalink to this headline">¶</a></h1>
+<p>We will integrate what we’ve learned in the previous sections to extract data from <em>several</em> rs-fmri images, and use that data as features in a machine learning model</p>
+<p>The dataset consists of 50 children (ages 3-13) and 33 young adults (ages 18-39). We will use rs-fmri data to try to predict who are adults and who are children.</p>
+<div class="section" id="load-the-data">
+<h2>Load the data<a class="headerlink" href="#load-the-data" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># change this to the location where you want the data to get downloaded</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;./nilearn_data&#39;</span>
+
+<span class="c1"># Now fetch the data</span>
+<span class="kn">from</span> <span class="nn">nilearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="n">development_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_development_fmri</span><span class="p">(</span><span class="n">n_subjects</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                                                     <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span>
+<span class="n">confounds</span> <span class="o">=</span> <span class="n">development_dataset</span><span class="o">.</span><span class="n">confounds</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>How many individual subjects do we have?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#len(data.func)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="extract-features">
+<h2>Extract features<a class="headerlink" href="#extract-features" title="Permalink to this headline">¶</a></h2>
+<p>Here, we are going to use the same techniques we learned in the previous tutorial to extract rs-fmri connectivity features from every subject.</p>
+<p>How are we going to do that? With a for loop.</p>
+<p>Don’t worry, it’s not as scary as it sounds</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here is a really simple for loop</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;the number is&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>the number is 0
+the number is 1
+the number is 2
+the number is 3
+the number is 4
+the number is 5
+the number is 6
+the number is 7
+the number is 8
+the number is 9
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">container</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">container</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="n">container</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now lets construct a more complicated loop to do what we want</p>
+<p>First we do some things we don’t need to do in the loop. Let’s reload our atlas, and re-iniate our masker and correlation_measure</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nilearn.input_data</span> <span class="kn">import</span> <span class="n">NiftiLabelsMasker</span>
+<span class="kn">from</span> <span class="nn">nilearn.connectome</span> <span class="kn">import</span> <span class="n">ConnectivityMeasure</span>
+
+<span class="c1"># load atlas</span>
+<span class="n">multiscale</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_basc_multiscale_2015</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span><span class="p">)</span>
+<span class="n">atlas_filename</span> <span class="o">=</span> <span class="n">multiscale</span><span class="o">.</span><span class="n">scale064</span>
+
+<span class="c1"># initialize masker (change verbosity)</span>
+<span class="n">masker</span> <span class="o">=</span> <span class="n">NiftiLabelsMasker</span><span class="p">(</span><span class="n">labels_img</span><span class="o">=</span><span class="n">atlas_filename</span><span class="p">,</span> <span class="n">standardize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                           <span class="n">memory</span><span class="o">=</span><span class="s1">&#39;nilearn_cache&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># initialize correlation measure, set to vectorize</span>
+<span class="n">correlation_measure</span> <span class="o">=</span> <span class="n">ConnectivityMeasure</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">vectorize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                         <span class="n">discard_diagonal</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset created in ./nilearn_data/basc_multiscale_2015
+
+Downloading data from https://ndownloader.figshare.com/files/1861819 ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ...done. (2 seconds, 0 min)
+Extracting data from ./nilearn_data/basc_multiscale_2015/53337d5c408465aa257d35f81c13413b/1861819..... done.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Okay – now that we have that taken care of, let’s run our big loop!</p>
+<p><strong>NOTE</strong>: On a laptop, this might a few minutes.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_features</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># here is where we will put the data (a container)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">sub</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="c1"># extract the timeseries from the ROIs in the atlas</span>
+    <span class="n">time_series</span> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span> <span class="n">confounds</span><span class="o">=</span><span class="n">confounds</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="c1"># create a region x region correlation matrix</span>
+    <span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">correlation_measure</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="n">time_series</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># add to our container</span>
+    <span class="n">all_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">)</span>
+    <span class="c1"># keep track of status</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;finished </span><span class="si">%s</span><span class="s1"> of </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s save the data to disk</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span><span class="s1">&#39;data/MAIN_BASC064_subsamp_features&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">all_features</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In case you do not want to run the full loop on your computer, you can load the output of the loop here!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#TODO: make file with dev data</span>
+<span class="n">feat_file</span> <span class="o">=</span> <span class="s1">&#39;data/MAIN_BASC064_subsamp_features.npz&#39;</span>
+<span class="n">X_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">feat_file</span><span class="p">)[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_features</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(30, 2016)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Okay so we’ve got our features.</p>
+<p>We can visualize our feature matrix</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_features</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;feature matrix&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;subjects&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;subjects&#39;)
+</pre></div>
+</div>
+<img alt="_images/machine-learning-with-nilearn_23_1.png" src="_images/machine-learning-with-nilearn_23_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="get-y-our-target-and-assess-its-distribution">
+<h2>Get Y (our target) and assess its distribution<a class="headerlink" href="#get-y-our-target-and-assess-its-distribution" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s load the phenotype data</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">pheno</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">phenotypic</span><span class="p">)</span>
+<span class="n">pheno</span> <span class="o">=</span> <span class="n">pheno</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;participant_id&#39;</span><span class="p">)</span>
+<span class="n">pheno</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant_id</th>
+      <th>Age</th>
+      <th>AgeGroup</th>
+      <th>Child_Adult</th>
+      <th>Gender</th>
+      <th>Handedness</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6</th>
+      <td>sub-pixar001</td>
+      <td>4.774812</td>
+      <td>4yo</td>
+      <td>child</td>
+      <td>M</td>
+      <td>R</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>sub-pixar002</td>
+      <td>4.856947</td>
+      <td>4yo</td>
+      <td>child</td>
+      <td>F</td>
+      <td>R</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>sub-pixar003</td>
+      <td>4.153320</td>
+      <td>4yo</td>
+      <td>child</td>
+      <td>F</td>
+      <td>R</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>sub-pixar004</td>
+      <td>4.473648</td>
+      <td>4yo</td>
+      <td>child</td>
+      <td>F</td>
+      <td>R</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>sub-pixar005</td>
+      <td>4.837782</td>
+      <td>4yo</td>
+      <td>child</td>
+      <td>F</td>
+      <td>R</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Looks like there is a column labeling children and adults. Let’s capture it in a variable</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_ageclass</span> <span class="o">=</span> <span class="n">pheno</span><span class="p">[</span><span class="s1">&#39;Child_Adult&#39;</span><span class="p">]</span>
+<span class="n">y_ageclass</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6     child
+7     child
+8     child
+9     child
+10    child
+Name: Child_Adult, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Maybe we should have a look at the distribution of our target variable</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">y_ageclass</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Child_Adult&#39;, ylabel=&#39;count&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/machine-learning-with-nilearn_29_1.png" src="_images/machine-learning-with-nilearn_29_1.png" />
+</div>
+</div>
+<p>We are a bit unbalanced – there seems to be more children than adults</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pheno</span><span class="o">.</span><span class="n">Child_Adult</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>child    24
+adult     6
+Name: Child_Adult, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="prepare-data-for-machine-learning">
+<h2>Prepare data for machine learning<a class="headerlink" href="#prepare-data-for-machine-learning" title="Permalink to this headline">¶</a></h2>
+<p>Here, we will define a “training sample” where we can play around with our models. We will also set aside a “test” sample that we will not touch until the end</p>
+<p>We want to be sure that our training and test sample are matched! We can do that with a “stratified split”. Specifically, we will stratify by age class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># Split the sample to training/test with a 60/40 ratio, and </span>
+<span class="c1"># stratify by age class, and also shuffle the data.</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+                                                    <span class="n">X_features</span><span class="p">,</span> <span class="c1"># x</span>
+                                                    <span class="n">y_ageclass</span><span class="p">,</span> <span class="c1"># y</span>
+                                                    <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span> <span class="c1"># 60%/40% split  </span>
+                                                    <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="c1"># shuffle dataset</span>
+                                                                    <span class="c1"># before splitting</span>
+                                                    <span class="n">stratify</span> <span class="o">=</span> <span class="n">y_ageclass</span><span class="p">,</span> <span class="c1"># keep</span>
+                                                                           <span class="c1"># distribution</span>
+                                                                           <span class="c1"># of ageclass</span>
+                                                                           <span class="c1"># consistent</span>
+                                                                           <span class="c1"># betw. train</span>
+                                                                           <span class="c1"># &amp; test sets.</span>
+                                                    <span class="n">random_state</span> <span class="o">=</span> <span class="mi">123</span> <span class="c1"># same shuffle each</span>
+                                                                       <span class="c1"># time</span>
+                                                                       <span class="p">)</span>
+
+<span class="c1"># print the size of our training and test groups</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;training:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span>
+     <span class="s1">&#39;testing:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>training: 18 testing: 12
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s visualize the distributions to be sure they are matched</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;child&#39;</span><span class="p">,</span><span class="s1">&#39;adult&#39;</span><span class="p">])</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Train&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;child&#39;</span><span class="p">,</span><span class="s1">&#39;adult&#39;</span><span class="p">])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Test&#39;)
+</pre></div>
+</div>
+<img alt="_images/machine-learning-with-nilearn_36_1.png" src="_images/machine-learning-with-nilearn_36_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="run-your-first-model">
+<h2>Run your first model!<a class="headerlink" href="#run-your-first-model" title="Permalink to this headline">¶</a></h2>
+<p>Machine learning can get pretty fancy pretty quickly. We’ll start with a very standard classification model called a Support Vector Classifier (SVC).</p>
+<p>While this may seem unambitious, simple models can be very robust. And we don’t have enough data to create more complex models.</p>
+<p>For more information, see this excellent resource:
+<a class="reference external" href="https://hal.inria.fr/hal-01824205">https://hal.inria.fr/hal-01824205</a></p>
+<p>First, a quick review of SVM!
+<img alt="" src="https://docs.opencv.org/2.4/_images/optimal-hyperplane.png" /></p>
+<p>Let’s fit our first model!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="n">l_svc</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span> <span class="c1"># define the model</span>
+
+<span class="n">l_svc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="c1"># fit the model</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SVC(kernel=&#39;linear&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Well… that was easy. Let’s see how well the model learned the data!</p>
+<p>We can judge our model on several criteria:</p>
+<ul class="simple">
+<li><p>Accuracy: The proportion of predictions that were correct overall.</p></li>
+<li><p>Precision: Accuracy of cases predicted as positive</p></li>
+<li><p>Recall: Number of true positives correctly predicted to be positive</p></li>
+<li><p>f1 score: A balance between precision and recall</p></li>
+</ul>
+<p>Or, for a more visual explanation…</p>
+<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/2/26/Precisionrecall.svg" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">f1_score</span>
+
+<span class="c1"># predict the training data based on the model</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">l_svc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span> 
+
+<span class="c1"># caluclate the model accuracy</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">l_svc</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> 
+
+<span class="c1"># calculate the model precision, recall and f1, all in one convenient report!</span>
+<span class="n">cr</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+                      <span class="n">y_pred</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="c1"># get a table to help us break down these scores</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s view our results and plot them all at once!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+
+<span class="c1"># print results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;accuracy:&#39;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cr</span><span class="p">)</span>
+
+<span class="c1"># plot confusion matrix</span>
+<span class="n">cmdf</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Adult&#39;</span><span class="p">,</span><span class="s1">&#39;Child&#39;</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Adult&#39;</span><span class="p">,</span><span class="s1">&#39;Child&#39;</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cmdf</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Observed&#39;</span><span class="p">)</span>
+<span class="c1"># label cells in matrix</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">range</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">format</span><span class="p">(</span><span class="n">cm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="s1">&#39;d&#39;</span><span class="p">),</span>
+                 <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>accuracy: 1.0
+              precision    recall  f1-score   support
+
+       adult       1.00      1.00      1.00         4
+       child       1.00      1.00      1.00        14
+
+    accuracy                           1.00        18
+   macro avg       1.00      1.00      1.00        18
+weighted avg       1.00      1.00      1.00        18
+</pre></div>
+</div>
+<img alt="_images/machine-learning-with-nilearn_44_1.png" src="_images/machine-learning-with-nilearn_44_1.png" />
+</div>
+</div>
+<p><img alt="" src="https://sebastianraschka.com/images/faq/multiclass-metric/conf_mat.png" /></p>
+<p>HOLY COW! Machine learning is amazing!!! Almost a perfect fit!</p>
+<p>…which means there’s something wrong. What’s the problem here?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_predict</span><span class="p">,</span> <span class="n">cross_val_score</span>
+
+<span class="c1"># predict</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">cross_val_predict</span><span class="p">(</span><span class="n">l_svc</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> 
+                           <span class="n">groups</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># scores</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">l_svc</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> 
+                     <span class="n">groups</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can look at the accuracy of the predictions for each fold of the cross-validation</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fold </span><span class="si">%s</span><span class="s1"> -- Acc = </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">acc</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fold 0 -- Acc = 0.5
+Fold 1 -- Acc = 1.0
+Fold 2 -- Acc = 1.0
+Fold 3 -- Acc = 1.0
+Fold 4 -- Acc = 0.5
+Fold 5 -- Acc = 0.0
+Fold 6 -- Acc = 0.5
+Fold 7 -- Acc = 0.5
+Fold 8 -- Acc = 1.0
+Fold 9 -- Acc = 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also look at the overall accuracy of the model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="n">overall_acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">overall_cr</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">overall_cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy:&#39;</span><span class="p">,</span><span class="n">overall_acc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">overall_cr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 0.6666666666666666
+              precision    recall  f1-score   support
+
+       adult       0.00      0.00      0.00         4
+       child       0.75      0.86      0.80        14
+
+    accuracy                           0.67        18
+   macro avg       0.38      0.43      0.40        18
+weighted avg       0.58      0.67      0.62        18
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">thresh</span> <span class="o">=</span> <span class="n">overall_cm</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">cmdf</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">overall_cm</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Adult&#39;</span><span class="p">,</span><span class="s1">&#39;Child&#39;</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Adult&#39;</span><span class="p">,</span><span class="s1">&#39;Child&#39;</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cmdf</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;copper&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Observed&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">overall_cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">range</span><span class="p">(</span><span class="n">overall_cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">format</span><span class="p">(</span><span class="n">overall_cm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="s1">&#39;d&#39;</span><span class="p">),</span>
+                 <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/machine-learning-with-nilearn_52_0.png" src="_images/machine-learning-with-nilearn_52_0.png" />
+</div>
+</div>
+<p>Not too bad at all!</p>
+</div>
+<div class="section" id="tweak-your-model">
+<h2>Tweak your model<a class="headerlink" href="#tweak-your-model" title="Permalink to this headline">¶</a></h2>
+<p>It’s very important to learn when and where its appropriate to “tweak” your model.</p>
+<p>Since we have done all of the previous analysis in our training data, it’s find to try different models. But we <strong>absolutely cannot</strong> “test” it on our left out data. If we do, we are in great danger of overfitting.</p>
+<p>We could try other models, or tweak hyperparameters, but we are probably not powered sufficiently to do so, and would once again risk overfitting.</p>
+<p>But as a demonstration, we could see the impact of “scaling” our data. Certain machine learning algorithms perform better when all the input data is transformed to a uniform range of values. This is often between 0 and 1, or mean centered around with unit variance. We can perhaps look at the performance of the model after scaling the data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Scale the training data</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_train_scl</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Training Data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;subjects&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;subjects&#39;)
+</pre></div>
+</div>
+<img alt="_images/machine-learning-with-nilearn_57_1.png" src="_images/machine-learning-with-nilearn_57_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_train_scl</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Scaled Training Data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;subjects&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;subjects&#39;)
+</pre></div>
+</div>
+<img alt="_images/machine-learning-with-nilearn_58_1.png" src="_images/machine-learning-with-nilearn_58_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># repeat the steps above to re-fit the model </span>
+<span class="c1"># and assess its performance</span>
+
+<span class="c1"># don&#39;t forget to switch X_train to X_train_scl</span>
+
+<span class="c1"># predict</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">cross_val_predict</span><span class="p">(</span><span class="n">l_svc</span><span class="p">,</span> <span class="n">X_train_scl</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> 
+                           <span class="n">groups</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># get scores</span>
+<span class="n">overall_acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">overall_cr</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">overall_cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy:&#39;</span><span class="p">,</span><span class="n">overall_acc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">overall_cr</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">thresh</span> <span class="o">=</span> <span class="n">overall_cm</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">cmdf</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">overall_cm</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Adult&#39;</span><span class="p">,</span><span class="s1">&#39;Child&#39;</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Adult&#39;</span><span class="p">,</span><span class="s1">&#39;Child&#39;</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cmdf</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;copper&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Observed&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">overall_cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">range</span><span class="p">(</span><span class="n">overall_cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">format</span><span class="p">(</span><span class="n">overall_cm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="s1">&#39;d&#39;</span><span class="p">),</span>
+                 <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 0.6666666666666666
+              precision    recall  f1-score   support
+
+       adult       0.00      0.00      0.00         4
+       child       0.75      0.86      0.80        14
+
+    accuracy                           0.67        18
+   macro avg       0.38      0.43      0.40        18
+weighted avg       0.58      0.67      0.62        18
+</pre></div>
+</div>
+<img alt="_images/machine-learning-with-nilearn_59_1.png" src="_images/machine-learning-with-nilearn_59_1.png" />
+</div>
+</div>
+<p>What do you think about the results of this model compared to the non-transformed model?</p>
+<p><strong>Exercise:</strong> Try fitting a new SVC model and tweak one of the many parameters. Run cross-validation and see how well it goes. Make a new cell and type SVC? to see the possible hyperparameters</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># new_model = SVC() </span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="can-our-model-classify-childrens-from-adults-in-completely-un-seen-data">
+<h2>Can our model classify childrens from adults in completely un-seen data?<a class="headerlink" href="#can-our-model-classify-childrens-from-adults-in-completely-un-seen-data" title="Permalink to this headline">¶</a></h2>
+<p>Now that we’ve fit a model we think has possibly learned how to decode childhood vs adulthood based on rs-fmri signal, let’s put it to the test. We will train our model on all of the training data, and try to predict the age of the subjects we left out at the beginning of this section.</p>
+<p>Because we performed a transformation on our training data, we will need to transform our testing data using the <em>same information!</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Notice how we use the Scaler that was fit to X_train and apply to X_test,</span>
+<span class="c1"># rather than creating a new Scaler for X_test</span>
+<span class="n">X_test_scl</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And now for the moment of truth!</p>
+<p>No cross-validation needed here. We simply fit the model with the training data and use it to predict the testing data</p>
+<p>I’m so nervous. Let’s just do it all in one cell</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l_svc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scl</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="c1"># fit to training data</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">l_svc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scl</span><span class="p">)</span> <span class="c1"># classify age class using testing data</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">l_svc</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_scl</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="c1"># get accuracy</span>
+<span class="n">cr</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">)</span> <span class="c1"># get prec., recall &amp; f1</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">)</span> <span class="c1"># get confusion matrix</span>
+
+<span class="c1"># print results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;accuracy =&#39;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cr</span><span class="p">)</span>
+
+<span class="c1"># plot results</span>
+<span class="n">thresh</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">cmdf</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Adult&#39;</span><span class="p">,</span><span class="s1">&#39;Child&#39;</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Adult&#39;</span><span class="p">,</span><span class="s1">&#39;Child&#39;</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cmdf</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu_r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Observed&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">range</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">format</span><span class="p">(</span><span class="n">cm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="s1">&#39;d&#39;</span><span class="p">),</span>
+                 <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>accuracy = 0.8333333333333334
+              precision    recall  f1-score   support
+
+       adult       0.50      0.50      0.50         2
+       child       0.90      0.90      0.90        10
+
+    accuracy                           0.83        12
+   macro avg       0.70      0.70      0.70        12
+weighted avg       0.83      0.83      0.83        12
+</pre></div>
+</div>
+<img alt="_images/machine-learning-with-nilearn_67_1.png" src="_images/machine-learning-with-nilearn_67_1.png" />
+</div>
+</div>
+<p><em><strong>Wow!!</strong></em> Congratulations. You just trained a machine learning model that used real rs-fmri data to predict the age of real humans.</p>
+<p>It seems like something in this data does seem to be systematically related to age … but what?</p>
+</div>
+<div class="section" id="interpreting-model-feature-importances">
+<h2>Interpreting model feature importances<a class="headerlink" href="#interpreting-model-feature-importances" title="Permalink to this headline">¶</a></h2>
+<p>Interpreting the feature importances of a machine learning model is a real can of worms. This is an area of active research. Unfortunately, it’s hard to trust the feature importance of some models.</p>
+<p>You can find a whole tutorial on this subject here:
+<a class="reference external" href="http://gael-varoquaux.info/interpreting_ml_tuto/index.html">http://gael-varoquaux.info/interpreting_ml_tuto/index.html</a></p>
+<p>For now, we’ll just eschew better judgement and take a look at our feature importances</p>
+<p>We can access the feature importances (weights) used my the model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l_svc</span><span class="o">.</span><span class="n">coef_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.00742533, -0.00236631, -0.00637746, ...,  0.0038582 ,
+         0.00397361, -0.00756762]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>lets plot these weights to see their distribution better</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">l_svc</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span><span class="n">l_svc</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;feature importances&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;feature&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;weight&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;weight&#39;)
+</pre></div>
+</div>
+<img alt="_images/machine-learning-with-nilearn_73_1.png" src="_images/machine-learning-with-nilearn_73_1.png" />
+</div>
+</div>
+<p>Or perhaps it will be easier to visualize this information as a matrix similar to the one we started with</p>
+<p>We can use the correlation measure from before to perform an inverse transform</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correlation_measure</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">l_svc</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 64, 64)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nilearn</span> <span class="kn">import</span> <span class="n">plotting</span>
+
+<span class="n">feat_exp_matrix</span> <span class="o">=</span> <span class="n">correlation_measure</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">l_svc</span><span class="o">.</span><span class="n">coef_</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">plotting</span><span class="o">.</span><span class="n">plot_matrix</span><span class="p">(</span><span class="n">feat_exp_matrix</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>  
+                     <span class="n">labels</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">feat_exp_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                     <span class="n">reorder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">tri</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f70b80862b0&gt;
+</pre></div>
+</div>
+<img alt="_images/machine-learning-with-nilearn_76_1.png" src="_images/machine-learning-with-nilearn_76_1.png" />
+</div>
+</div>
+<p>Let’s see if we can throw those features onto an actual brain.</p>
+<p>First, we’ll need to gather the coordinates of each ROI of our atlas</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coords</span> <span class="o">=</span> <span class="n">plotting</span><span class="o">.</span><span class="n">find_parcellation_cut_coords</span><span class="p">(</span><span class="n">atlas_filename</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And now we can use our feature matrix and the wonders of nilearn to create a connectome map where each node is an ROI, and each connection is weighted by the importance of the feature to the model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_connectome</span><span class="p">(</span><span class="n">feat_exp_matrix</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays.OrthoProjector at 0x7f70b231cf10&gt;
+</pre></div>
+</div>
+<img alt="_images/machine-learning-with-nilearn_80_1.png" src="_images/machine-learning-with-nilearn_80_1.png" />
+</div>
+</div>
+<p>Whoa!! That’s…a lot to process. Maybe let’s threshold the edges so that only the most important connections are visualized</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_connectome</span><span class="p">(</span><span class="n">feat_exp_matrix</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edge_threshold</span><span class="o">=</span><span class="mf">0.04</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1789</span><span class="o">/</span><span class="mf">1398999387.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">plotting</span><span class="o">.</span><span class="n">plot_connectome</span><span class="p">(</span><span class="n">feat_exp_matrix</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edge_threshold</span><span class="o">=</span><span class="mf">0.04</span><span class="p">)</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nilearn/plotting/img_plotting.py</span> in <span class="ni">plot_connectome</span><span class="nt">(adjacency_matrix, node_coords, node_color, node_size, edge_cmap, edge_vmin, edge_vmax, edge_threshold, output_file, display_mode, figure, axes, title, annotate, black_bg, alpha, edge_kwargs, node_kwargs, colorbar)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1162</span>                                <span class="n">black_bg</span><span class="o">=</span><span class="n">black_bg</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1163</span> 
+<span class="ne">-&gt; </span><span class="mi">1164</span>     <span class="n">display</span><span class="o">.</span><span class="n">add_graph</span><span class="p">(</span><span class="n">adjacency_matrix</span><span class="p">,</span> <span class="n">node_coords</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1165</span>                       <span class="n">node_color</span><span class="o">=</span><span class="n">node_color</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="n">node_size</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1166</span>                       <span class="n">edge_cmap</span><span class="o">=</span><span class="n">edge_cmap</span><span class="p">,</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nilearn/plotting/displays.py</span> in <span class="ni">add_graph</span><span class="nt">(self, adjacency_matrix, node_coords, node_color, node_size, edge_cmap, edge_vmin, edge_vmax, edge_threshold, edge_kwargs, node_kwargs, colorbar)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2258</span>         <span class="k">if</span> <span class="n">colorbar</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2259</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_colorbar</span> <span class="o">=</span> <span class="n">colorbar</span>
+<span class="ne">-&gt; </span><span class="mi">2260</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_show_colorbar</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">cmap</span><span class="p">,</span> <span class="n">ax</span><span class="o">.</span><span class="n">norm</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">edge_threshold</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2261</span> 
+<span class="g g-Whitespace">   </span><span class="mi">2262</span>         <span class="n">plt</span><span class="o">.</span><span class="n">draw_if_interactive</span><span class="p">()</span>
+
+<span class="ne">AttributeError</span>: &#39;GlassBrainAxes&#39; object has no attribute &#39;cmap&#39;
+</pre></div>
+</div>
+<img alt="_images/machine-learning-with-nilearn_82_1.png" src="_images/machine-learning-with-nilearn_82_1.png" />
+</div>
+</div>
+<p>That’s definitely an improvement, but it’s still a bit hard to see what’s going on.
+Nilearn has a new feature that let’s use view this data interactively!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting</span><span class="o">.</span><span class="n">view_connectome</span><span class="p">(</span><span class="n">feat_exp_matrix</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">edge_threshold</span><span class="o">=</span><span class="s1">&#39;90%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#view = plotting.view_connectome(feat_exp_matrix, coords, threshold=&#39;90%&#39;)    </span>
+<span class="c1">#view.open_in_browser() </span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="functional-connectivity-with-nilearn.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Functional connectiviy with <code class="docutils literal notranslate"><span class="pre">nilearn</span></code></p>
+        </div>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By François Paugam, Hao-Ting Wang<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
