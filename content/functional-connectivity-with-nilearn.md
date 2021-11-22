@@ -17,6 +17,38 @@ import warnings
 warnings.filterwarnings("ignore")
 ```
 
+In this tutorial, we'll see how the Python library `nilearn` allows us to easily perform machine learning analyses with neuroimaging data,
+specifically functional magnetic resonance imaging (fMRI).
+
+You may notice that the name `nilearn` is reminiscent of [`scikit-learn`](https://scikit-learn.org),
+a popular Python library for machine learning.
+This is no accident!
+Nilearn and scikit-learn were created by the same team,
+and nilearn is designed to bring machine **LEARN**ing to the NeuroImaging (**NI**) domain.
+
+When performing a machine learning analysis, our data often look something like this:
+
+```{code-cell} python3
+import pandas as pd
+
+# read_csv can read in just about any plain-text tabular data
+data = pd.read_csv('./data/abide2.tsv', sep='\t')
+data.head()
+```
+
+For our purposes, what's most interesting is the structure of this data set.
+That is, the data is structured in a tabular format,
+with pre-extracted features of interest.
+This makes it easier to consider issues such as: which features would we like to predict?
+Or, how should we handle cross-validation?
+
+But if we're starting with neuroimaging data, how can create this kind of structured representation?
+
+To understand why neuroimaging data needs some special attention, 
+we will briefly talk about the basics of fMRI.
+
+## A brief introduction to functional magnetic resonance imaging
+
 Functional magnetic resonance imaging (fMRI) is a type of neuroimaging technique that measures the brain activity.
 They are made up of a series of 3D pictures of the brain collected at a given frequency.
 A typical fMRI file is a 4D image, with the spatial dimensions (x, y, z) added with the dimension of time t. 
@@ -148,34 +180,6 @@ Much of the work in fMRI involves analyzing time series.
 Scientists found some cognitive functions involves the activity of neurons for an isolated region, and some times different regions of the brain interact together to perform a task. 
 This functional integration leads to a description of the functional brain as a network.
 Formally, the co-activation patter of different time series is called functional connectivity.
-
-In this tutorial, we'll see how the Python library `nilearn` allows us to easily perform machine learning analyses with neuroimaging data,
-specifically fMRI.
-
-You may notice that the name `nilearn` is reminiscent of [`scikit-learn`](https://scikit-learn.org),
-a popular Python library for machine learning.
-This is no accident!
-Nilearn and scikit-learn were created by the same team,
-and nilearn is designed to bring machine **LEARN**ing to the NeuroImaging (**NI**) domain.
-
-When performing a machine learning analysis, our data often look something like this:
-
-```{code-cell} python3
-import pandas as pd
-
-# read_csv can read in just about any plain-text tabular data
-data = pd.read_csv('./data/abide2.tsv', sep='\t')
-data.head()
-```
-
-For our purposes, what's most interesting is the structure of this data set.
-That is, the data is structured in a tabular format,
-with pre-extracted features of interest.
-This makes it easier to consider issues such as: which features would we like to predict?
-Or, how should we handle cross-validation?
-
-But if we're starting with neuroimaging data,
-how can create this kind of structured representation?
 
 ## Neuroimaging data
 
