@@ -1,0 +1,5 @@
+format: jb-article
+root: intro
+sections:
+- file: functional-connectivity-with-nilearn
+- file: machine-learning-with-nilearn
