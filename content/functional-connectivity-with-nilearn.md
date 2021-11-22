@@ -17,7 +17,10 @@ import warnings
 warnings.filterwarnings("ignore")
 ```
 
-Some description about bold.
+Functional magnetic resonance imaging (fMRI) is a type of neuroimaging technique that measures the brain activity.
+They are made up of a series of 3D pictures of the brain collected at a given frequency.
+A typical fMRI file is a 4D image, with the spatial dimensions (x, y, z) added with the dimension of time t. 
+We could, for example, acquire 1 brain volume every 2 seconds, for 6 minutes, which would result in an fMRI data file consisting of 180 3D brain volumes.
 
 ```{code-cell} python3
 :tags: ["hide-input", "remove-output"]
@@ -100,9 +103,54 @@ glue("voxel-timeseries-fig", fig, display=False)
 Illustration of a volume (voxel), size 3 mm x 3 mm x 3 mm, and the associated fMRI time course.
 ```
 
-In this tutorial,
-we'll see how the Python library `nilearn` allows us to easily perform machine learning analyses with neuroimaging data,
-specifically MRI and fMRI.
+A three dimensional brain volume is formed by several thousand voxels, which are small units of volumes having a coordinate in x, y, z space. 
+In fMRI, for each voxel of the brain, we have several points of measurement of the activity over time, which forms what is called a time series or time course. 
+The time series reflects changes in neuronal activity over time indirectly through the blood delivering energy to activate the neurons, called the haemodynamic response. 
+This activity creates a contrast between the oxygenated vs deoxygenated blood around a population of the neuron detectable by the magnatic field, called the blood-oxygen-level-dependent (BOLD) signal.
+
+```{code-cell} python3
+:tags: ["hide-input", "remove-output"]
+
+# To get an impulse response, we simulate a single event
+# occurring at time t=0, with duration 1s.
+import numpy as np
+frame_times = np.linspace(0, 30, 61)
+onset, amplitude, duration = 0., 1., 1.
+exp_condition = np.array((onset, duration, amplitude)).reshape(3, 1)
+stim = np.zeros_like(frame_times)
+stim[(frame_times > onset) * (frame_times <= onset + duration)] = amplitude
+
+# Now we plot the hrf
+from nilearn.glm.first_level import compute_regressor
+import matplotlib.pyplot as plt
+fig = plt.figure(figsize=(6, 4))
+
+# obtain the signal of interest by convolution
+signal, name = compute_regressor(
+    exp_condition, 'glover', frame_times, con_id='main',
+    oversampling=16)
+
+# plot this
+plt.fill(frame_times, stim, 'b', alpha=.5, label='stimulus')
+plt.plot(frame_times, signal.T[0], 'r', label=name[0])
+
+# Glue the figure
+from myst_nb import glue
+glue("hrf-fig", fig, display=False)
+```
+```{glue:figure} hrf-fig
+:figwidth: 800px
+:name: "hrf-fig"
+Hemodynamic response to a unit pulse of one second duration, following the model proposed by {cite}`Glover_1999`. The code generated this figure is adopted from a [tutorial](https://nilearn.github.io/auto_examples/04_glm_first_level/plot_hrf.html#sphx-glr-auto-examples-04-glm-first-level-plot-hrf-py) in Nilearn, et la. The figure is licenced under CC-BY.
+```
+
+Much of the work in fMRI involves analyzing time series.
+Scientists found some cognitive functions involves the activity of neurons for an isolated region, and some times different regions of the brain interact together to perform a task. 
+This functional integration leads to a description of the functional brain as a network.
+Formally, the co-activation patter of different time series is called functional connectivity.
+
+In this tutorial, we'll see how the Python library `nilearn` allows us to easily perform machine learning analyses with neuroimaging data,
+specifically fMRI.
 
 You may notice that the name `nilearn` is reminiscent of [`scikit-learn`](https://scikit-learn.org),
 a popular Python library for machine learning.
@@ -110,8 +158,6 @@ This is no accident!
 Nilearn and scikit-learn were created by the same team,
 and nilearn is designed to bring machine **LEARN**ing to the NeuroImaging (**NI**) domain.
 
-With that in mind,
-let's briefly consider why we might want specialized tools for working with neuroimaging data.
 When performing a machine learning analysis, our data often look something like this:
 
 ```{code-cell} python3
@@ -121,8 +167,6 @@ import pandas as pd
 data = pd.read_csv('./data/abide2.tsv', sep='\t')
 data.head()
 ```
-
-You may recognize this data from Tal's tutorial introducing machine learning!
 
 For our purposes, what's most interesting is the structure of this data set.
 That is, the data is structured in a tabular format,
@@ -139,7 +183,7 @@ Neuroimaging data does not have a tabular structure.
 Instead, it has both spatial and temporal dependencies between successive data points.
 That is, knowing _where_ and _when_ something was measured tells you information about the surrounding data points.
 
-We also know that neuroimaging data contains a lot of noise that's not blood-oxygen-level dependent (BOLD), such as head motion.
+We also know that neuroimaging data contains a lot of noise that's not BOLD signal, such as head motion.
 Since we don't think that these other noise sources are related to neuronal firing,
 we often need to consider how we can make sure that our analyses are not driven by these noise sources.
 
