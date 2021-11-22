@@ -2,4 +2,3 @@ nilearn
 matplotlib
 seaborn
 jupyter-book
-jupytext

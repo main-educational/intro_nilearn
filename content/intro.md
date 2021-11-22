@@ -7,7 +7,7 @@ to apply machine learning techniques on your data.
 It was developed for use at the [Montreal AI and Neuroscience (MAIN)](https://www.main2021.org/) 
 conference in November 2021.
 
-### Pre-requisites
+## Pre-requisites
 
 You need to have access to a terminal with Python 3. 
 If it not already the case, 

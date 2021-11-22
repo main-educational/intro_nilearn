@@ -25,6 +25,7 @@ repository:
 html:
   use_issues_button: false
   use_repository_button: false
+  home_page_in_navbar: false
 
 launch_buttons:
   notebook_interface        : classic  # The interface interactive links will activate ["classic", "jupyterlab"]
