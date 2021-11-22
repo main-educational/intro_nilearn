@@ -33,11 +33,11 @@ The dataset consists of 50 children (ages 3-13) and 33 young adults (ages 18-39)
 ### Load the data
 
 ```{code-cell} ipython3
+:tags: ["remove-output"]
+
 # change this to the location where you want the data to get downloaded
 data_dir = './nilearn_data'
-```
 
-```{code-cell} ipython3
 # Now fetch the data
 from nilearn import datasets
 development_dataset = datasets.fetch_development_fmri(n_subjects=30,
@@ -109,6 +109,7 @@ Okay -- now that we have that taken care of, let's run our big loop!
 **NOTE**: On a laptop, this might a few minutes.
 
 ```{code-cell} ipython3
+:tags: ["remove-output"]
 all_features = [] # here is where we will put the data (a container)
 
 for i,sub in enumerate(data):

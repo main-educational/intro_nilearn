@@ -205,9 +205,12 @@ Let's download the first 30 participants.
 
 ```{code-cell} python3
 :tags: [hide-output]
+# change this to the location where you want the data to get downloaded
+data_dir = './nilearn_data'
+# Now fetch the data
 from nilearn import datasets
-
-development_dataset = datasets.fetch_development_fmri(n_subjects=30)
+development_dataset = datasets.fetch_development_fmri(n_subjects=30,
+                                                      data_dir=data_dir)
 ```
 
 Now, this `development_dataset` object has several attributes which provide access to the relevant information.
