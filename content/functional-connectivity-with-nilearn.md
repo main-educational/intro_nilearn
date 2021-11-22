@@ -176,11 +176,6 @@ glue("hrf-fig", fig, display=False)
 Hemodynamic response to a unit pulse of one second duration, following the model proposed by {cite}`Glover_1999`. The code generated this figure is adopted from a [tutorial](https://nilearn.github.io/auto_examples/04_glm_first_level/plot_hrf.html#sphx-glr-auto-examples-04-glm-first-level-plot-hrf-py) in Nilearn, et la. The figure is licenced under CC-BY.
 ```
 
-Much of the work in fMRI involves analyzing time series.
-Scientists found some cognitive functions involves the activity of neurons for an isolated region, and some times different regions of the brain interact together to perform a task. 
-This functional integration leads to a description of the functional brain as a network.
-Formally, the co-activation patter of different time series is called functional connectivity.
-
 ## Neuroimaging data
 
 Neuroimaging data does not have a tabular structure.
@@ -389,7 +384,12 @@ so you don't accidentally flip your dimensions when using a scikit-learn model!
 
 ## Creating and viewing a connectome
 
+Scientists found some cognitive functions involves the activity of neurons for an isolated region, and some times different regions of the brain interact together to perform a task. 
+This functional integration leads to a description of the functional brain as a network.
+Formally, the co-activation of different time series is called functional connectivity.
+
 The simplest and most commonly used kind of functional connectivity is pairwise correlation between ROIs.
+
 We can estimate it using [`nilearn.connectome.ConnectivityMeasure`](https://nilearn.github.io/modules/generated/nilearn.connectome.ConnectivityMeasure.html).
 
 ```{code-cell} python3
