@@ -130,7 +130,6 @@ np.savez_compressed('data/MAIN_BASC064_subsamp_features', a=all_features)
 In case you do not want to run the full loop on your computer, you can load the output of the loop here!
 
 ```{code-cell} python3
-#TODO: make file with dev data
 feat_file = 'data/MAIN_BASC064_subsamp_features.npz'
 X_features = np.load(feat_file)['a']
 ```
@@ -557,6 +556,6 @@ plotting.view_connectome(feat_exp_matrix, coords, edge_threshold='90%')
 You can choose to open the figure in a browser with the following lines:
 
 ```{code-cell} python3
-# view = plotting.view_connectome(feat_exp_matrix, coords, threshold='90%')    
+# view = plotting.view_connectome(feat_exp_matrix, coords, edge_threshold='90%') 
 # view.open_in_browser() 
 ```
