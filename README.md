@@ -1,32 +1,24 @@
 # Introduction to Machine Learning for neuroimaging with nilearn and scikit-learn
-## Resources @ MAIN 2021
 
-These two tutorials will introduce you to the [nilearn](https://nilearn.github.io/stable/index.html) library to manipulate and process fMRI data, and to [scikit-learn](https://scikit-learn.org/stable/) to apply machine learning techniques on your data.
+## Runing the tutorials
+Please refere to the [jupyter book](https://main-educational.github.io/intro_ML/intro.html)
 
-### Pre-requisites
+## Building this book
 
-You need to have access to a terminal with Python 3. If it not already the case, [here](https://realpython.com/installing-python/#how-to-check-your-python-version-on-windows) is a guide to install
-python 3 on any OS.
+This is the website of the educational workshop of the Montreal Artificial Intelligence and Neuroscience (MAIN) conference.
+The website is built with the [jupyter book](https://jupyterbook.org/) project, and deployed using github.
 
-## Setup
+### Build the book locally
+- Clone this repository
+- Run `pip install jupyter-book` (recommended in a virtual environment).
+- For a fresh build, remove the content of `content/_build/`
+- Run `jb build content/`
 
-We encourage you to use a virtual environment for this tutorial (and for all your projects, that's a good practice). To do this, run the following command in your terminal, it will create the
-environment in a folder named `env_tuto`:
-```
-python3 -m venv env_tuto
-```
-Then the following command will activate the environment :
-```
-source env_tuto/bin/activate
-```
-Finally, you can install the required libraries :
-```
-pip install -r requirements.txt
-```
+A static version of the book will be generated on `content/_build/html/`.
 
-## Usage
+### Hosting the book
 
-Now that you are all set, you can run the notebooks with the command :
-```
-jupyter notebook
-```
+The html version of the book is hosted on the `gh-pages` branch of this repo. Navigate to your local build and run,
+- `ghp-import -n -p -f content/_build/html`
+
+This will automatically push your build to the `gh-pages` branch. More information on this hosting process can be found [here](https://jupyterbook.org/publish/gh-pages.html#manually-host-your-book-with-github-pages).
