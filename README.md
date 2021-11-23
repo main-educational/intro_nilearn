@@ -1,4 +1,4 @@
-# [Introduction to Machine Learning for neuroimaging with nilearn and scikit-learn](https://main-educational.github.io/intro_ML/intro.html))
+# [Introduction to Machine Learning for neuroimaging with nilearn and scikit-learn](https://main-educational.github.io/intro_ML/intro.html)
 
 ## Running the tutorials
 Please refer to the [jupyter book landing page](https://main-educational.github.io/intro_ML/intro.html).
