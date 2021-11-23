@@ -7,21 +7,23 @@ to apply machine learning techniques on your data.
 It was developed for use at the [Montreal AI and Neuroscience (MAIN)](https://www.main2021.org/) 
 conference in November 2021.
 
-## Pre-requisites
+## Setup
+
+There are two ways to run the tutorials: local installation and Binder.
+
+### Local installation (Recommanded)
+
+```{note}
 
 You need to have access to a terminal with Python 3. 
-If you have setup your enviornment based on instructions of [MAIN educational installation guide](https://main-educational.github.io/installation.html), you are good to go :tada:
+If you have setup your enviornment based on instructions of [MAIN educational installation guide](https://main-educational.github.io/installation.html), you are good to go 🎉
+
 If it not already the case, 
 [here](https://realpython.com/installing-python/#how-to-check-your-python-version-on-windows) 
 is a quick guide to install python 3 on any OS.
+```
 
-## Setup
-
-There are two ways to run the tutorials:
-
-### Local copy of the material (Recommanded)
-
-Firstly, clone/download this repository to your machine and navigate to the directory.
+Clone/download this repository to your machine and navigate to the directory.
 
 ```bash
 git clone https://github.com/main-educational/intro_ML.git
@@ -58,11 +60,11 @@ Now that you are all set, you can run the notebooks with the command:
 jupyter notebook
 ```
 
-Click on the `.md` files. They will be rendered as jupyter notebooks :tada:
+Click on the `.md` files. They will be rendered as jupyter notebooks 🎉
 
 ### Binder 
 
-If you wish to run the tutorial in Binder, click on the rocket icon to launch binder :rocket:
+If you wish to run the tutorial in Binder, click on the rocket icon to launch the notebook 🚀
 
 ```{warning}
 The computing resource on Binder is limited. 
