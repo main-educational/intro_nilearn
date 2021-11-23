@@ -1,6 +1,7 @@
 _build/
 nilearn_cache/
 nilearn_data/
+*.npz
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
