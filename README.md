@@ -1,7 +1,7 @@
-# Introduction to Machine Learning for neuroimaging with nilearn and scikit-learn
+# [Introduction to Machine Learning for neuroimaging with nilearn and scikit-learn](https://main-educational.github.io/intro_ML/intro.html))
 
 ## Runing the tutorials
-Please refere to the [jupyter book](https://main-educational.github.io/intro_ML/intro.html)
+Please refere to the [jupyter book landing page](https://main-educational.github.io/intro_ML/intro.html).
 
 ## Building this book
 
@@ -22,3 +22,5 @@ The html version of the book is hosted on the `gh-pages` branch of this repo. Na
 - `ghp-import -n -p -f content/_build/html`
 
 This will automatically push your build to the `gh-pages` branch. More information on this hosting process can be found [here](https://jupyterbook.org/publish/gh-pages.html#manually-host-your-book-with-github-pages).
+
+Alternatively, the existing GitHub Action will deploy the book when new commits are made to the main branch.
