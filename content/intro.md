@@ -11,12 +11,12 @@ conference in November 2021.
 
 There are two ways to run the tutorials: local installation and Binder.
 
-### Local installation (Recommanded)
+### Local installation (Recommended)
 
 ```{note}
 
 You need to have access to a terminal with Python 3. 
-If you have setup your enviornment based on instructions of [MAIN educational installation guide](https://main-educational.github.io/installation.html), you are good to go 🎉
+If you have setup your environment based on instructions of [MAIN educational installation guide](https://main-educational.github.io/installation.html), you are good to go 🎉
 
 If it not already the case, 
 [here](https://realpython.com/installing-python/#how-to-check-your-python-version-on-windows) 
@@ -69,7 +69,7 @@ If you wish to run the tutorial in Binder, click on the rocket icon to launch th
 ```{warning}
 The computing resource on Binder is limited. 
 Some cells might not execute correctly, or the data download will not be completed.
-For the full experience, we recommand using the local set up instruction.
+For the full experience, we recommend using the local set up instruction.
 ```
 
 ## Acknowledgements
