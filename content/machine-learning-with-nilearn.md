@@ -1,25 +1,22 @@
 ---
 jupytext:
-  formats: ipynb,md:myst
+  cell_metadata_filter: -all
+  formats: md:myst
   text_representation:
     extension: .md
     format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.13.1
 kernelspec:
-  display_name: Python 3 (ipykernel)
-  language: python
+  display_name: Python 3
   name: python3
+repository:
+  url: https://github.com/main-educational/intro_ML
 ---
 
-```{code-cell} ipython3
+```{code-cell} python3
+:tags: [hide-cell]
 # Let's keep our notebook clean, so it's a little more readable!
 import warnings
 warnings.filterwarnings('ignore')
-```
-
-```{code-cell} ipython3
-%matplotlib inline
 ```
 
 # Predict age from resting state fMRI (rs-fMRI) with [`scikit-learn`](https://scikit-learn.org)
@@ -32,7 +29,7 @@ The dataset consists of 50 children (ages 3-13) and 33 young adults (ages 18-39)
 
 ### Load the data
 
-```{code-cell} ipython3
+```{code-cell} python3
 :tags: ["remove-output"]
 
 # change this to the location where you want the data to get downloaded
@@ -41,7 +38,7 @@ data_dir = './nilearn_data'
 # Now fetch the data
 from nilearn import datasets
 development_dataset = datasets.fetch_development_fmri(n_subjects=30,
-                                                     data_dir=data_dir)
+                                                      data_dir=data_dir)
 
 data = development_dataset.func
 confounds = development_dataset.confounds
@@ -49,7 +46,7 @@ confounds = development_dataset.confounds
 
 How many individual subjects do we have?
 
-```{code-cell} ipython3
+```{code-cell} python3
 #len(data.func)
 len(data)
 ```
@@ -64,14 +61,14 @@ How are we going to do that? With a for loop.
 
 Don't worry, it's not as scary as it sounds
 
-```{code-cell} ipython3
+```{code-cell} python3
 # Here is a really simple for loop
 
 for i in range(10):
     print('the number is', i)
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 container = []
 for i in range(10):
     container.append(i)
@@ -85,7 +82,7 @@ Now lets construct a more complicated loop to do what we want
 
 First we do some things we don't need to do in the loop. Let's reload our atlas, and re-iniate our masker and correlation_measure
 
-```{code-cell} ipython3
+```{code-cell} python3
 from nilearn.input_data import NiftiLabelsMasker
 from nilearn.connectome import ConnectivityMeasure
 
@@ -108,7 +105,7 @@ Okay -- now that we have that taken care of, let's run our big loop!
 
 **NOTE**: On a laptop, this might a few minutes.
 
-```{code-cell} ipython3
+```{code-cell} python3
 :tags: ["remove-output"]
 all_features = [] # here is where we will put the data (a container)
 
@@ -123,7 +120,7 @@ for i,sub in enumerate(data):
     print('finished %s of %s'%(i+1,len(data)))
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 # Let's save the data to disk
 import numpy as np
 
@@ -132,12 +129,12 @@ np.savez_compressed('data/MAIN_BASC064_subsamp_features', a=all_features)
 
 In case you do not want to run the full loop on your computer, you can load the output of the loop here!
 
-```{code-cell} ipython3
+```{code-cell} python3
 feat_file = 'data/MAIN_BASC064_subsamp_features.npz'
 X_features = np.load(feat_file)['a']
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 X_features.shape
 ```
 
@@ -147,7 +144,7 @@ Okay so we've got our features.
 
 We can visualize our feature matrix
 
-```{code-cell} ipython3
+```{code-cell} python3
 import matplotlib.pyplot as plt
 
 plt.imshow(X_features, aspect='auto')
@@ -159,7 +156,7 @@ plt.ylabel('subjects')
 
 ### Get Y (our target) and assess its distribution
 
-```{code-cell} ipython3
+```{code-cell} python3
 # Let's load the phenotype data
 import pandas as pd
 
@@ -170,14 +167,14 @@ pheno.head()
 
 Looks like there is a column labeling children and adults. Let's capture it in a variable
 
-```{code-cell} ipython3
+```{code-cell} python3
 y_ageclass = pheno['Child_Adult']
 y_ageclass.head()
 ```
 
 Maybe we should have a look at the distribution of our target variable
 
-```{code-cell} ipython3
+```{code-cell} python3
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.countplot(y_ageclass)
@@ -185,7 +182,7 @@ sns.countplot(y_ageclass)
 
 We are a bit unbalanced -- there seems to be more children than adults
 
-```{code-cell} ipython3
+```{code-cell} python3
 pheno.Child_Adult.value_counts()
 ```
 
@@ -197,7 +194,7 @@ Here, we will define a "training sample" where we can play around with our model
 
 We want to be sure that our training and test sample are matched! We can do that with a "stratified split". Specifically, we will stratify by age class.
 
-```{code-cell} ipython3
+```{code-cell} python3
 from sklearn.model_selection import train_test_split
 
 # Split the sample to training/test with a 60/40 ratio, and 
@@ -226,7 +223,7 @@ print('training:', len(X_train),
 
 Let's visualize the distributions to be sure they are matched
 
-```{code-cell} ipython3
+```{code-cell} python3
 fig,(ax1,ax2) = plt.subplots(2)
 sns.countplot(y_train, ax=ax1, order=['child','adult'])
 ax1.set_title('Train')
@@ -252,7 +249,7 @@ First, a quick review of SVM!
 
 Let's fit our first model!
 
-```{code-cell} ipython3
+```{code-cell} python3
 from sklearn.svm import SVC
 l_svc = SVC(kernel='linear') # define the model
 
@@ -271,13 +268,13 @@ Or, for a more visual explanation...
 
 ![](https://upload.wikimedia.org/wikipedia/commons/2/26/Precisionrecall.svg)
 
-```{code-cell} ipython3
+```{code-cell} python3
 from sklearn.metrics import classification_report, confusion_matrix, precision_score, f1_score
 
 # predict the training data based on the model
 y_pred = l_svc.predict(X_train) 
 
-# caluclate the model accuracy
+# calculate the model accuracy
 acc = l_svc.score(X_train, y_train) 
 
 # calculate the model precision, recall and f1, all in one convenient report!
@@ -290,7 +287,7 @@ cm = confusion_matrix(y_true=y_train, y_pred = y_pred)
 
 Let's view our results and plot them all at once!
 
-```{code-cell} ipython3
+```{code-cell} python3
 import itertools
 from pandas import DataFrame
 
@@ -318,7 +315,7 @@ HOLY COW! Machine learning is amazing!!! Almost a perfect fit!
 
 ...which means there's something wrong. What's the problem here?
 
-```{code-cell} ipython3
+```{code-cell} python3
 from sklearn.model_selection import cross_val_predict, cross_val_score
 
 # predict
@@ -331,14 +328,14 @@ acc = cross_val_score(l_svc, X_train, y_train,
 
 We can look at the accuracy of the predictions for each fold of the cross-validation
 
-```{code-cell} ipython3
+```{code-cell} python3
 for i in range(10):
     print('Fold %s -- Acc = %s'%(i, acc[i]))
 ```
 
 We can also look at the overall accuracy of the model
 
-```{code-cell} ipython3
+```{code-cell} python3
 from sklearn.metrics import accuracy_score
 overall_acc = accuracy_score(y_pred = y_pred, y_true = y_train)
 overall_cr = classification_report(y_pred = y_pred, y_true = y_train)
@@ -347,7 +344,7 @@ print('Accuracy:',overall_acc)
 print(overall_cr)
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 thresh = overall_cm.max() / 2
 cmdf = DataFrame(overall_cm, index = ['Adult','Child'], columns = ['Adult','Child'])
 sns.heatmap(cmdf, cmap='copper')
@@ -375,14 +372,14 @@ We could try other models, or tweak hyperparameters, but we are probably not pow
 
 But as a demonstration, we could see the impact of "scaling" our data. Certain machine learning algorithms perform better when all the input data is transformed to a uniform range of values. This is often between 0 and 1, or mean centered around with unit variance. We can perhaps look at the performance of the model after scaling the data
 
-```{code-cell} ipython3
+```{code-cell} python3
 # Scale the training data
 from sklearn.preprocessing import MinMaxScaler
 scaler = MinMaxScaler().fit(X_train)
 X_train_scl = scaler.transform(X_train)
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 plt.imshow(X_train, aspect='auto')
 plt.colorbar()
 plt.title('Training Data')
@@ -390,7 +387,7 @@ plt.xlabel('features')
 plt.ylabel('subjects')
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 plt.imshow(X_train_scl, aspect='auto')
 plt.colorbar()
 plt.title('Scaled Training Data')
@@ -398,7 +395,7 @@ plt.xlabel('features')
 plt.ylabel('subjects')
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 # repeat the steps above to re-fit the model 
 # and assess its performance
 
@@ -433,18 +430,18 @@ What do you think about the results of this model compared to the non-transforme
 
 **Exercise:** Try fitting a new SVC model and tweak one of the many parameters. Run cross-validation and see how well it goes. Make a new cell and type SVC? to see the possible hyperparameters
 
-```{code-cell} ipython3
+```{code-cell} python3
 # new_model = SVC() 
 ```
 
-### Can our model classify childrens from adults in completely un-seen data?
+### Can our model classify children from adults in completely un-seen data?
 Now that we've fit a model we think has possibly learned how to decode childhood vs adulthood based on rs-fmri signal, let's put it to the test. We will train our model on all of the training data, and try to predict the age of the subjects we left out at the beginning of this section.
 
 +++
 
 Because we performed a transformation on our training data, we will need to transform our testing data using the *same information!* 
 
-```{code-cell} ipython3
+```{code-cell} python3
 # Notice how we use the Scaler that was fit to X_train and apply to X_test,
 # rather than creating a new Scaler for X_test
 X_test_scl = scaler.transform(X_test)
@@ -456,7 +453,7 @@ No cross-validation needed here. We simply fit the model with the training data 
 
 I'm so nervous. Let's just do it all in one cell
 
-```{code-cell} ipython3
+```{code-cell} python3
 l_svc.fit(X_train_scl, y_train) # fit to training data
 y_pred = l_svc.predict(X_test_scl) # classify age class using testing data
 acc = l_svc.score(X_test_scl, y_test) # get accuracy
@@ -497,13 +494,13 @@ For now, we'll just eschew better judgement and take a look at our feature impor
 
 We can access the feature importances (weights) used my the model
 
-```{code-cell} ipython3
+```{code-cell} python3
 l_svc.coef_
 ```
 
 lets plot these weights to see their distribution better
 
-```{code-cell} ipython3
+```{code-cell} python3
 plt.bar(range(l_svc.coef_.shape[-1]),l_svc.coef_[0])
 plt.title('feature importances')
 plt.xlabel('feature')
@@ -514,11 +511,11 @@ Or perhaps it will be easier to visualize this information as a matrix similar t
 
 We can use the correlation measure from before to perform an inverse transform
 
-```{code-cell} ipython3
+```{code-cell} python3
 correlation_measure.inverse_transform(l_svc.coef_).shape
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 from nilearn import plotting
 
 feat_exp_matrix = correlation_measure.inverse_transform(l_svc.coef_)[0]
@@ -533,35 +530,32 @@ Let's see if we can throw those features onto an actual brain.
 
 First, we'll need to gather the coordinates of each ROI of our atlas
 
-```{code-cell} ipython3
+```{code-cell} python3
 coords = plotting.find_parcellation_cut_coords(atlas_filename)
 ```
 
 And now we can use our feature matrix and the wonders of nilearn to create a connectome map where each node is an ROI, and each connection is weighted by the importance of the feature to the model
 
-```{code-cell} ipython3
+```{code-cell} python3
 plotting.plot_connectome(feat_exp_matrix, coords, colorbar=True)
 ```
 
 Whoa!! That's...a lot to process. Maybe let's threshold the edges so that only the most important connections are visualized
 
-```{code-cell} ipython3
-plotting.plot_connectome(feat_exp_matrix, coords, colorbar=True, edge_threshold=0.04)
+```{code-cell} python3
+plotting.plot_connectome(feat_exp_matrix, coords, colorbar=True, edge_threshold=0.02)
 ```
 
 That's definitely an improvement, but it's still a bit hard to see what's going on.
 Nilearn has a new feature that let's use view this data interactively!
 
-```{code-cell} ipython3
+```{code-cell} python3
 plotting.view_connectome(feat_exp_matrix, coords, edge_threshold='90%')
 ```
 
-```{code-cell} ipython3
-#Uncomment and run if you want to display the connectome in a seperate webpage.
-#view = plotting.view_connectome(feat_exp_matrix, coords, edge_threshold='90%')    
-#view.open_in_browser() 
-```
+You can choose to open the figure in a browser with the following lines:
 
-```{code-cell} ipython3
-
+```{code-cell} python3
+# view = plotting.view_connectome(feat_exp_matrix, coords, edge_threshold='90%') 
+# view.open_in_browser() 
 ```

@@ -7,19 +7,26 @@ to apply machine learning techniques on your data.
 It was developed for use at the [Montreal AI and Neuroscience (MAIN)](https://www.main2021.org/) 
 conference in November 2021.
 
-## Pre-requisites
-
-You need to have access to a terminal with Python 3. 
-If it not already the case, 
-[here](https://realpython.com/installing-python/#how-to-check-your-python-version-on-windows) 
-is a guide to install python 3 on any OS.
-
 ## Setup
 
-Firstly, clone/download this repository to your machine and navigate to the directory.
+There are two ways to run the tutorials: local installation and Binder.
+
+### Local installation (Recommended)
+
+```{note}
+
+You need to have access to a terminal with Python 3. 
+If you have setup your environment based on instructions of [MAIN educational installation guide](https://main-educational.github.io/installation.html), you are good to go 🎉
+
+If it not already the case, 
+[here](https://realpython.com/installing-python/#how-to-check-your-python-version-on-windows) 
+is a quick guide to install python 3 on any OS.
+```
+
+Clone/download this repository to your machine and navigate to the directory.
 
 ```bash
-git clone https://github.com/mtl-AI-neuroscience/intro_ML.git
+git clone https://github.com/main-educational/intro_ML.git
 cd intro_ML
 ```
 
@@ -42,12 +49,27 @@ Finally, you can install the required libraries:
 pip install -r requirements.txt
 ```
 
-## Usage
+Navigate to the content of the book:
+```bash
+cd content/
+```
 
 Now that you are all set, you can run the notebooks with the command:
 
 ```bash
 jupyter notebook
+```
+
+Click on the `.md` files. They will be rendered as jupyter notebooks 🎉
+
+### Binder 
+
+If you wish to run the tutorial in Binder, click on the rocket icon to launch the notebook 🚀
+
+```{warning}
+The computing resource on Binder is limited. 
+Some cells might not execute correctly, or the data download will not be completed.
+For the full experience, we recommend using the local set up instruction.
 ```
 
 ## Acknowledgements
