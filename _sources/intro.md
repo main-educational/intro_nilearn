@@ -10,16 +10,21 @@ conference in November 2021.
 ## Pre-requisites
 
 You need to have access to a terminal with Python 3. 
+If you have setup your enviornment based on instructions of [MAIN educational installation guide](https://main-educational.github.io/installation.html), you are good to go :tada:
 If it not already the case, 
 [here](https://realpython.com/installing-python/#how-to-check-your-python-version-on-windows) 
-is a guide to install python 3 on any OS.
+is a quick guide to install python 3 on any OS.
 
 ## Setup
+
+There are two ways to run the tutorials:
+
+### Local copy of the material (Recommanded)
 
 Firstly, clone/download this repository to your machine and navigate to the directory.
 
 ```bash
-git clone https://github.com/mtl-AI-neuroscience/intro_ML.git
+git clone https://github.com/main-educational/intro_ML.git
 cd intro_ML
 ```
 
@@ -42,12 +47,27 @@ Finally, you can install the required libraries:
 pip install -r requirements.txt
 ```
 
-## Usage
+Navigate to the content of the book:
+```bash
+cd content/
+```
 
 Now that you are all set, you can run the notebooks with the command:
 
 ```bash
 jupyter notebook
+```
+
+Click on the `.md` files. They will be rendered as jupyter notebooks :tada:
+
+### Binder 
+
+If you wish to run the tutorial in Binder, click on the rocket icon to launch binder :rocket:
+
+```{warning}
+The computing resource on Binder is limited. 
+Some cells might not execute correctly, or the data download will not be completed.
+For the full experience, we recommand using the local set up instruction.
 ```
 
 ## Acknowledgements

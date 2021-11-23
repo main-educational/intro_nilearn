@@ -202,11 +202,18 @@
   <a class="reference internal nav-link" href="#setup">
    Setup
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#usage">
-   Usage
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#local-copy-of-the-material-recommanded">
+     Local copy of the material (Recommanded)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#binder">
+     Binder
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#acknowledgements">
@@ -234,14 +241,18 @@ conference in November 2021.</p>
 <div class="section" id="pre-requisites">
 <h2>Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permalink to this headline">¶</a></h2>
 <p>You need to have access to a terminal with Python 3.
+If you have setup your enviornment based on instructions of <a class="reference external" href="https://main-educational.github.io/installation.html">MAIN educational installation guide</a>, you are good to go :tada:
 If it not already the case,
 <a class="reference external" href="https://realpython.com/installing-python/#how-to-check-your-python-version-on-windows">here</a>
-is a guide to install python 3 on any OS.</p>
+is a quick guide to install python 3 on any OS.</p>
 </div>
 <div class="section" id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>There are two ways to run the tutorials:</p>
+<div class="section" id="local-copy-of-the-material-recommanded">
+<h3>Local copy of the material (Recommanded)<a class="headerlink" href="#local-copy-of-the-material-recommanded" title="Permalink to this headline">¶</a></h3>
 <p>Firstly, clone/download this repository to your machine and navigate to the directory.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/mtl-AI-neuroscience/intro_ML.git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/main-educational/intro_ML.git
 <span class="nb">cd</span> intro_ML
 </pre></div>
 </div>
@@ -260,12 +271,25 @@ environment in a folder named <code class="docutils literal notranslate"><span c
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install -r requirements.txt
 </pre></div>
 </div>
+<p>Navigate to the content of the book:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> content/
+</pre></div>
 </div>
-<div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>Now that you are all set, you can run the notebooks with the command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter notebook
 </pre></div>
+</div>
+<p>Click on the <code class="docutils literal notranslate"><span class="pre">.md</span></code> files. They will be rendered as jupyter notebooks :tada:</p>
+</div>
+<div class="section" id="binder">
+<h3>Binder<a class="headerlink" href="#binder" title="Permalink to this headline">¶</a></h3>
+<p>If you wish to run the tutorial in Binder, click on the rocket icon to launch binder :rocket:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The computing resource on Binder is limited.
+Some cells might not execute correctly, or the data download will not be completed.
+For the full experience, we recommand using the local set up instruction.</p>
+</div>
 </div>
 </div>
 <div class="section" id="acknowledgements">
