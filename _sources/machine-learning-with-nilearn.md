@@ -275,7 +275,7 @@ from sklearn.metrics import classification_report, confusion_matrix, precision_s
 # predict the training data based on the model
 y_pred = l_svc.predict(X_train) 
 
-# caluclate the model accuracy
+# calculate the model accuracy
 acc = l_svc.score(X_train, y_train) 
 
 # calculate the model precision, recall and f1, all in one convenient report!
@@ -435,7 +435,7 @@ What do you think about the results of this model compared to the non-transforme
 # new_model = SVC() 
 ```
 
-### Can our model classify childrens from adults in completely un-seen data?
+### Can our model classify children from adults in completely un-seen data?
 Now that we've fit a model we think has possibly learned how to decode childhood vs adulthood based on rs-fmri signal, let's put it to the test. We will train our model on all of the training data, and try to predict the age of the subjects we left out at the beginning of this section.
 
 +++
