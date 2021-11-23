@@ -1,12 +1,17 @@
 ---
 jupytext:
+  cell_metadata_filter: -all
+  formats: md:myst
   text_representation:
+    extension: .md
     format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.10.3
 kernelspec:
   display_name: Python 3
   name: python3
 repository:
-  url: https://github.com/mtl-AI-neuroscience/intro_ML
+  url: https://github.com/main-educational/intro_ML
 ---
 
 # Functional connectiviy with [`nilearn`](http://nilearn.github.io)
@@ -65,8 +70,11 @@ from nilearn.input_data import NiftiLabelsMasker, NiftiMasker
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
+# change this to the location where you want the data to get downloaded
+data_dir = './nilearn_data'
+
 # Let's extract timeseries from one subject in a dataset
-haxby_dataset = datasets.fetch_haxby()
+haxby_dataset = datasets.fetch_haxby(data_dir=data_dir)
 haxby_func_filename = haxby_dataset.func[0]
 
 # initialise a masker
@@ -292,7 +300,7 @@ which defines a set of _probabilistic_ ROIs across the brain.
 ```{code-cell} python3
 import numpy as np
 
-msdl_atlas = datasets.fetch_atlas_msdl()
+msdl_atlas = datasets.fetch_atlas_msdl(data_dir=data_dir)
 
 msdl_coords = msdl_atlas.region_coords
 n_regions = len(msdl_coords)
