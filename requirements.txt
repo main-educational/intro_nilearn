@@ -3,3 +3,4 @@ matplotlib
 seaborn
 jupyter
 jupytext
+myst-nb
