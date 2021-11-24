@@ -23,44 +23,44 @@ If it not already the case,
 is a quick guide to install python 3 on any OS.
 ::::
 
-Clone/download this repository to your machine and navigate to the directory.
+1. Clone/download this repository to your machine and navigate to the directory.
 
-```bash
-git clone https://github.com/main-educational/intro_ML.git
-cd intro_ML
-```
+    ```bash
+    git clone https://github.com/main-educational/intro_ML.git
+    cd intro_ML
+    ```
 
-We encourage you to use a virtual environment for this tutorial 
-(and for all your projects, that's a good practice). 
-To do this, run the following command in your terminal, it will create the
-environment in a folder named `env_tuto`:
+2. We encourage you to use a virtual environment for this tutorial 
+    (and for all your projects, that's a good practice). 
+    To do this, run the following command in your terminal, it will create the
+    environment in a folder named `env_tuto`:
 
-```bash
-python3 -m venv env_tuto
-```
-Then the following command will activate the environment:
+    ```bash
+    python3 -m venv env_tuto
+    ```
+    Then the following command will activate the environment:
 
-```bash
-source env_tuto/bin/activate
-```
-Finally, you can install the required libraries:
+    ```bash
+    source env_tuto/bin/activate
+    ```
 
-```bash
-pip install -r requirements.txt
-```
+    Finally, you can install the required libraries:
 
-Navigate to the content of the book:
-```bash
-cd content/
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-Now that you are all set, you can run the notebooks with the command:
+3. Navigate to the content of the book:
+    ```bash
+    cd content/
+    ```
 
-```bash
-jupyter notebook
-```
+    Now that you are all set, you can run the notebooks with the command:
 
-Click on the `.md` files. They will be rendered as jupyter notebooks 🎉
+    ```bash
+    jupyter notebook
+    ```
+    Click on the `.md` files. They will be rendered as jupyter notebooks 🎉
 
 ### Binder 
 
