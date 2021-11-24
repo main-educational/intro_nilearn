@@ -5,17 +5,17 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.11.5
 kernelspec:
-  display_name: Python 3
+  display_name: Python 3 (ipykernel)
+  language: python
   name: python3
-repository:
-  url: https://github.com/main-educational/intro_ML
 ---
 
 # Functional connectiviy with [`nilearn`](http://nilearn.github.io)
 
 ```{code-cell} python3
-:tags: [hide-cell]
 import warnings
 warnings.filterwarnings("ignore")
 ```
@@ -135,6 +135,7 @@ plt.ylabel("BOLD signal", fontsize= 10)
 from myst_nb import glue
 glue("voxel-timeseries-fig", fig, display=False)
 ```
+
 ```{glue:figure} voxel-timeseries-fig
 :figwidth: 800px
 :name: "voxel-timeseries-fig"
@@ -210,7 +211,7 @@ For example, we can see that this data set contains over 150 children and adults
 Let's download the first 30 participants.
 
 ```{code-cell} python3
-:tags: [hide-output]
+:tags: ["hide-input", "remove-output"]
 # change this to the location where you want the data to get downloaded
 data_dir = './nilearn_data'
 # Now fetch the data
@@ -440,9 +441,23 @@ pd.read_table(development_dataset.confounds[0]).head()
 
 We can see that there are several different kinds of noise sources included!
 This is actually a subset of all possible fMRIPrep generated confounds that the Nilearn developers have pre-selected.
-We could access the full list by passing the argument `reduce_confounds=False` to our original call downloading the `development_dataset`.
 For most analyses, this list of confounds is reasonable, so we'll use these Nilearn provided defaults.
+
+````{tip}
+We could access the full list by passing the argument `reduce_confounds=False` to our original call downloading the `development_dataset`.
+
+```{warning}
+Never pass the full fMRIPrep confounds to denosing function. 
+```
+
 For your own analyses, make sure to check which confounds you're using!
+In the up and coming update of nilearn, a new module `nilearn.interfaces.fmriprep` has been added.
+We implemented function [`load_confounds`](https://nilearn.github.io/dev/modules/generated/nilearn.interfaces.fmriprep.load_confounds.html) 
+and [`load_confounds_strategy`](https://nilearn.github.io/dev/modules/generated/nilearn.interfaces.fmriprep.load_confounds_strategy.html) 
+to help you select confound variables based on existing literature and fMRIPrep documentations.
+For a sneak peak, please refer to the 
+[developement version of the nilearn document](https://nilearn.github.io/dev/auto_examples/03_connectivity/plot_signal_extraction.html#sphx-glr-auto-examples-03-connectivity-plot-signal-extraction-py).
+````
 
 Importantly, we can pass these confounds directly to our masker object:
 
