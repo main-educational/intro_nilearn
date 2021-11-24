@@ -13,7 +13,7 @@ There are two ways to run the tutorials: local installation and Binder.
 
 ### Local installation (Recommended)
 
-```{note}
+::::{note}
 
 You need to have access to a terminal with Python 3. 
 If you have setup your environment based on instructions of [MAIN educational installation guide](https://main-educational.github.io/installation.html), you are good to go 🎉
@@ -21,7 +21,7 @@ If you have setup your environment based on instructions of [MAIN educational in
 If it not already the case, 
 [here](https://realpython.com/installing-python/#how-to-check-your-python-version-on-windows) 
 is a quick guide to install python 3 on any OS.
-```
+::::
 
 Clone/download this repository to your machine and navigate to the directory.
 
