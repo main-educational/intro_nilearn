@@ -456,7 +456,7 @@ We implemented function [`load_confounds`](https://nilearn.github.io/dev/modules
 and [`load_confounds_strategy`](https://nilearn.github.io/dev/modules/generated/nilearn.interfaces.fmriprep.load_confounds_strategy.html) 
 to help you select confound variables based on existing literature and fMRIPrep documentations.
 For a sneak peak, please refer to the 
-[developement version of the nilearn document](https://nilearn.github.io/dev/auto_examples/03_connectivity/plot_signal_extraction.html#sphx-glr-auto-examples-03-connectivity-plot-signal-extraction-py).
+[development version of the nilearn document](https://nilearn.github.io/dev/auto_examples/03_connectivity/plot_signal_extraction.html#sphx-glr-auto-examples-03-connectivity-plot-signal-extraction-py).
 ````
 
 Importantly, we can pass these confounds directly to our masker object:
