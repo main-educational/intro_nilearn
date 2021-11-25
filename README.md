@@ -1,4 +1,5 @@
 # [Introduction to Machine Learning for neuroimaging with nilearn and scikit-learn](https://main-educational.github.io/intro_ML/intro.html)
+[![Binder](https://binder.conp.cloud/badge_logo.svg)](https://binder.conp.cloud/v2/gh/main-educational/intro_ML/HEAD)
 
 ## Running the tutorials
 Please refer to the [jupyter book landing page](https://main-educational.github.io/intro_ML/intro.html).
