@@ -75,7 +75,7 @@ from repo2data.repo2data import Repo2Data
 data_req_path = os.path.join("..", "binder", "data_requirement.json")
 # download data
 repo2data = Repo2Data(data_req_path)
-data_dir = repo2data.install()
+data_dir = repo2data.install()[0]
 
 # Let's extract timeseries from one subject in a dataset
 haxby_dataset = datasets.fetch_haxby(data_dir=data_dir)
