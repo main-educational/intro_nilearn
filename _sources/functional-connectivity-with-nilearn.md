@@ -318,8 +318,8 @@ Because MSDL is a probabilistic atlas, we can view it using:
 plotting.plot_prob_atlas(msdl_atlas.maps)
 ```
 
-````{note}
-**Different type of brain parcellation schemes**
+````{admonition} Different type of brain parcellation schemes
+:class: note
 
 There are various ways of defining brain parcels. 
 Largely we can classify them in two ways: 
@@ -357,9 +357,12 @@ then we can use [`nilearn.input_data.NiftiLabelsMasker`](https://nilearn.github.
 Because we're working with "soft" or probabilistic ROIs,
 we can instead supply these ROIs to [`nilearn.input_data.NiftiMapsMasker`](https://nilearn.github.io/modules/generated/nilearn.input_data.NiftiMapsMasker.html).
 
-```{tip}
+```{admonition} Further reading on Maskers
+:class: note
 For a full list of the available Masker objects,
 see [the Nilearn documentation](https://nilearn.github.io/modules/reference.html#module-nilearn.input_data).
+
+To learn more about the concept, `nilearn` provides a great [tutorial](https://nilearn.github.io/manipulating_images/masker_objects.html). 
 ```
 
 ## Applying a Masker object
@@ -469,7 +472,9 @@ We can see that there are several different kinds of noise sources included!
 This is actually a subset of all possible fMRIPrep generated confounds that the Nilearn developers have pre-selected.
 For most analyses, this list of confounds is reasonable, so we'll use these Nilearn provided defaults.
 
-````{tip}
+````{admonition} New coming feature in NiLearn about confounds
+:class: tip
+
 We could access the full list by passing the argument `reduce_confounds=False` to our original call downloading the `development_dataset`.
 
 ```{warning}
