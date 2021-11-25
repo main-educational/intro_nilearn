@@ -32,8 +32,13 @@ The dataset consists of 50 children (ages 3-13) and 33 young adults (ages 18-39)
 ```{code-cell} python3
 :tags: ["remove-output"]
 
-# change this to the location where you want the data to get downloaded
-data_dir = './nilearn_data'
+from repo2data.repo2data import Repo2Data
+
+# install the data if running locally, or points to cached data if running on neurolibre
+data_req_path = os.path.join("..", "binder", "data_requirement.json")
+# download data
+repo2data = Repo2Data(data_req_path)
+data_dir = repo2data.install()
 
 # Now fetch the data
 from nilearn import datasets
