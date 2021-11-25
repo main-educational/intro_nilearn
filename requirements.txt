@@ -1,10 +1,10 @@
 ghp-import
-jupyter-book==0.10.0
+jupyter-book
 jupyter
 jupytext
 pandas
-matplotlib==3.4.1
-nilearn==0.7.1
-repo2data==2.5.2
+matplotlib
+nilearn
+repo2data
 seaborn
 myst-nb
