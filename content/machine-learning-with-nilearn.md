@@ -38,7 +38,7 @@ from repo2data.repo2data import Repo2Data
 data_req_path = os.path.join("..", "binder", "data_requirement.json")
 # download data
 repo2data = Repo2Data(data_req_path)
-data_dir = repo2data.install()
+data_dir = repo2data.install()[0]
 
 # Now fetch the data
 from nilearn import datasets
