@@ -16,6 +16,7 @@ kernelspec:
 # Functional connectiviy with [`nilearn`](http://nilearn.github.io)
 
 ```{code-cell} python3
+:tags: ["hide-input", "remove-output"]
 import warnings
 warnings.filterwarnings("ignore")
 ```
@@ -180,7 +181,7 @@ glue("hrf-fig", fig, display=False)
 ```{glue:figure} hrf-fig
 :figwidth: 800px
 :name: "hrf-fig"
-Hemodynamic response to a unit pulse of one second duration, following the model proposed by {cite}`Glover_1999`. The code generated this figure is adopted from a [tutorial](https://nilearn.github.io/auto_examples/04_glm_first_level/plot_hrf.html#sphx-glr-auto-examples-04-glm-first-level-plot-hrf-py) in Nilearn, et la. The figure is licenced under CC-BY.
+Hemodynamic response to a unit pulse of one second duration, following the model proposed by {cite:p}`Glover_1999`. The code generated this figure is adopted from a [tutorial](https://nilearn.github.io/auto_examples/04_glm_first_level/plot_hrf.html#sphx-glr-auto-examples-04-glm-first-level-plot-hrf-py) in Nilearn, et la. The figure is licenced under CC-BY.
 ```
 
 ## Neuroimaging data
@@ -292,8 +293,11 @@ and it also provides access to other atlases that have previously been defined b
 
 ## Choosing regions of interest
 
+Nilearn ships with several atlases commonly used in the field,
+including the Schaefer atlas and the Harvard-Oxford atlas.
+
 In this tutorial,
-we'll use the MSDL (multi-subject dictionary learning; {cite}`Varoquaux_2011`) atlas,
+we'll use the MSDL (multi-subject dictionary learning; {cite:p}`Varoquaux_2011`) atlas,
 which defines a set of _probabilistic_ ROIs across the brain.
 
 ```{code-cell} python3
@@ -307,15 +311,35 @@ n_regions = len(msdl_coords)
 print(f'MSDL has {n_regions} ROIs, part of the following networks :\n{np.unique(msdl_atlas.networks)}.')
 ```
 
-Nilearn ships with several atlases commonly used in the field,
-including the Schaefer atlas and the Harvard-Oxford atlas.
-
 It also provides us with easy ways to view these atlases directly.
 Because MSDL is a probabilistic atlas, we can view it using:
 
 ```{code-cell} python3
 plotting.plot_prob_atlas(msdl_atlas.maps)
 ```
+
+````{note}
+**Different type of brain parcellation schemes**
+
+There are various ways of defining brain parcels. 
+Largely we can classify them in two ways: 
+
+- Functional vs anatomical
+
+    - Anatomical atlas uses structural land marks to separate regions. Example: [Harvard-Oxford atlas](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_harvard_oxford.html)
+    - Functional atlas defines regions based on the organisation of fMRI signal, such as functional connectivity. Example: [Schaefer atlas](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html)
+
+- Soft vs hard
+
+    - Soft, or probabilistic parcels uses contiunous, non-zero value to define regions. 
+    Example: [Difumo (functional)](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_difumo.html#nilearn.datasets.fetch_atlas_difumo), 
+    [Hammersmith (anatomical)](https://pubmed.ncbi.nlm.nih.gov/12874777/)
+    - Hard parcels has rigid boundaries. Example: [BASC (functional)](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_basc_multiscale_2015.html#nilearn.datasets.fetch_atlas_basc_multiscale_2015)
+
+It's important to understand the method used for constructing the atlas of choice.
+For example, using a anatomical atlas to extract signal from functional data might not be the best thing.
+To find out more, [watch this lecture from Brainhack School by Dr Pierre Bellec on brain parcellation in fMRI](https://www.youtube.com/watch?v=7uMVRebuDZo).
+````
 
 ## A quick side-note on the NiftiMasker zoo
 
@@ -333,8 +357,10 @@ then we can use [`nilearn.input_data.NiftiLabelsMasker`](https://nilearn.github.
 Because we're working with "soft" or probabilistic ROIs,
 we can instead supply these ROIs to [`nilearn.input_data.NiftiMapsMasker`](https://nilearn.github.io/modules/generated/nilearn.input_data.NiftiMapsMasker.html).
 
+```{tip}
 For a full list of the available Masker objects,
 see [the Nilearn documentation](https://nilearn.github.io/modules/reference.html#module-nilearn.input_data).
+```
 
 ## Applying a Masker object
 
@@ -483,6 +509,9 @@ we can see a big difference when including the confounds!
 This is an important reminder to make sure that your data are cleaned of any possible sources of noise _before_ running a machine learning analysis.
 Otherwise, you might be classifying participants on e.g. amount of head motion rather than a feature of interest!
 
-```{bibliography} references.bib
-:style: unsrt
+
+## References
+
+```{bibliography}
+:filter: docname in docnames
 ```
