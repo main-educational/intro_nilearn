@@ -1,4 +1,6 @@
 nilearn
 matplotlib
 seaborn
-jupyter-book
+jupyter
+jupytext
+myst-nb
