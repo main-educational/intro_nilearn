@@ -1,4 +1,0 @@
-nilearn
-matplotlib
-seaborn
-jupyter-book
