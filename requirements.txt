@@ -1,10 +1,4 @@
-ghp-import
-jupyter-book
-jupyter
-jupytext
-pandas
-matplotlib
 nilearn
-repo2data
+matplotlib
 seaborn
-myst-nb
+jupyter-book
