@@ -31,7 +31,7 @@ The dataset consists of 50 children (ages 3-13) and 33 young adults (ages 18-39)
 
 ```{code-cell} python3
 :tags: ["remove-output"]
-
+import os
 from repo2data.repo2data import Repo2Data
 
 # install the data if running locally, or points to cached data if running on neurolibre
