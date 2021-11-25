@@ -60,6 +60,7 @@ We could, for example, acquire 1 brain volume every 2 seconds, for 6 minutes, wh
 
 ```{code-cell} python3
 :tags: ["hide-input", "remove-output"]
+import os
 import pandas as pd
 import nilearn
 import numpy as np
