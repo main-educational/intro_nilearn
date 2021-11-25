@@ -1,3 +1,3 @@
 { "src": "from nilearn import datasets; datasets.fetch_development_fmri(data_dir=_dst, n_subjects=30); datasets.fetch_atlas_msdl(data_dir=_dst); datasets.fetch_atlas_basc_multiscale_2015(data_dir=_dst); datasets.fetch_haxby(data_dir=_dst)",
- "dst": "./data",
+ "dst": "../data",
  "projectName": "nilearn_data"}
