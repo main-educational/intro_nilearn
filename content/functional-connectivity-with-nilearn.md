@@ -68,9 +68,13 @@ from mpl_toolkits.mplot3d import Axes3D
 from nilearn.input_data import NiftiLabelsMasker, NiftiMasker
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
+from repo2data.repo2data import Repo2Data
 
-# change this to the location where you want the data to get downloaded
-data_dir = './nilearn_data'
+# install the data if running locally, or points to cached data if running on neurolibre
+data_req_path = os.path.join("..", "binder", "data_requirement.json")
+# download data
+repo2data = Repo2Data(data_req_path)
+data_dir = repo2data.install()
 
 # Let's extract timeseries from one subject in a dataset
 haxby_dataset = datasets.fetch_haxby(data_dir=data_dir)
