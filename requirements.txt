@@ -4,3 +4,4 @@ seaborn
 jupyter
 jupytext
 myst-nb
+repo2data==2.5.2
