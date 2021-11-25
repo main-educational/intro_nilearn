@@ -212,7 +212,7 @@ For example, we can see that this data set contains over 150 children and adults
 Let's download the first 30 participants.
 
 ```{code-cell} python3
-:tags: ["hide-input", "remove-output"]
+:tags: ["remove-output"]
 # change this to the location where you want the data to get downloaded
 data_dir = './nilearn_data'
 # Now fetch the data
