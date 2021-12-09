@@ -35,7 +35,7 @@ data_dir = './nilearn_data'
 
 # Now fetch the data
 from nilearn import datasets
-development_dataset = datasets.fetch_development_fmri(n_subjects=150,
+development_dataset = datasets.fetch_development_fmri(
                                                       data_dir=data_dir,
                                                       reduce_confounds = False
                                                     )
@@ -51,36 +51,45 @@ How many individual subjects do we have?
 len(data)
 ```
 
+## Get Y (our target) and assess its distribution
+
+```{code-cell} ipython3
+# Let's load the phenotype data
+import pandas as pd
+
+pheno = pd.DataFrame(development_dataset.phenotypic)
+pheno.head(40)
+```
+
+Looks like there is a column labeling children and adults. Let's capture it in a variable
+
+```{code-cell} ipython3
+y_ageclass = pheno['Child_Adult']
+y_ageclass.head()
+```
+
+Let's have a look at the distribution of our target variable
+
+```{code-cell} ipython3
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.countplot(y_ageclass)
+pheno.Child_Adult.value_counts()
+```
+
+This is very unbalanced -- there seems to be much more children than adults. It is something we can accomodate to a degree when training our model, but it is not within the scope of this tutorial. So let's select an arbitrary subset of the children to match the number of adults. As the 32 adults are at the beginning of the frame, this is easy to do:
+
+```{code-cell} ipython3
+data = data[0:66]
+pheno = pheno.head(66)
+y_ageclass = pheno['Child_Adult']
+```
+
 ## Extract features
 
 +++
 
-Here, we are going to use the same techniques we learned in the previous tutorial to extract rs-fmri connectivity features from every subject.
-
-How are we going to do that? With a for loop.
-
-Don't worry, it's not as scary as it sounds
-
-```{code-cell} ipython3
-# Here is a really simple for loop
-
-for i in range(10):
-    print('the number is', i)
-```
-
-```{code-cell} ipython3
-container = []
-for i in range(10):
-    container.append(i)
-
-container
-```
-
-Now lets construct a more complicated loop to do what we want
-
-+++
-
-First we do some things we don't need to do in the loop. Let's reload our atlas, and re-iniate our masker and correlation_measure
+Here, we are going to use the same techniques we learned in the previous tutorial to extract rs-fmri connectivity features from every subject. Let's reload our atlas, and re-iniate our masker and correlation_measure.
 
 ```{code-cell} ipython3
 from nilearn.input_data import NiftiLabelsMasker
@@ -100,7 +109,7 @@ correlation_measure = ConnectivityMeasure(kind='correlation', vectorize=True,
                                          discard_diagonal=True)
 ```
 
-Okay -- now that we have that taken care of, let's run our big loop!
+Okay -- now that we have that taken care of, let's load all of the data!
 
 +++
 
@@ -154,38 +163,6 @@ plt.xlabel('features')
 plt.ylabel('subjects')
 ```
 
-## Get Y (our target) and assess its distribution
-
-```{code-cell} ipython3
-# Let's load the phenotype data
-import pandas as pd
-
-pheno = pd.DataFrame(development_dataset.phenotypic)
-pheno = pheno.sort_values('participant_id')
-pheno.head()
-```
-
-Looks like there is a column labeling children and adults. Let's capture it in a variable
-
-```{code-cell} ipython3
-y_ageclass = pheno['Child_Adult']
-y_ageclass.head()
-```
-
-Maybe we should have a look at the distribution of our target variable
-
-```{code-cell} ipython3
-import matplotlib.pyplot as plt
-import seaborn as sns
-sns.countplot(y_ageclass)
-```
-
-We are a bit unbalanced -- there seems to be more children than adults
-
-```{code-cell} ipython3
-pheno.Child_Adult.value_counts()
-```
-
 ## Prepare data for machine learning
 
 Here, we will define a "training sample" where we can play around with our models. We will also set aside a "test" sample that we will not touch until the end
@@ -193,6 +170,10 @@ Here, we will define a "training sample" where we can play around with our model
 +++
 
 We want to be sure that our training and test sample are matched! We can do that with a "stratified split". Specifically, we will stratify by age class.
+
+```{code-cell} ipython3
+y_ageclass.shape
+```
 
 ```{code-cell} ipython3
 from sklearn.model_selection import train_test_split
@@ -356,7 +337,7 @@ for i, j in itertools.product(range(overall_cm.shape[0]), range(overall_cm.shape
                  color="white")
 ```
 
-The model seems to be performing poorly in the adult group. And as the classes are quite unbalanced, it's hard to judge if 80+% accuracy is actually good. Let's run some null model:
+The model seems to be performing very well. Let's run some null model:
 
 ```{code-cell} ipython3
 from sklearn.model_selection import permutation_test_score
@@ -366,7 +347,7 @@ score, permutation_score, pvalue = permutation_test_score(
 print(f'accuracy {score}, average permutation accuracy {permutation_score.mean()}, p value {pvalue}')
 ```
 
-so, due to class imbalance, the chance level is much higher than 50%. But the model still performs significantly higher than chance.
+so, as the classes are balanced, the chance level is close to 50%. The model performs significantly higher than chance.
 
 +++
 
@@ -486,7 +467,7 @@ for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
                  color="white")
 ```
 
-The model may not generalize as well as we hoped. If you manage to adapt the hyper-parameters, you may have found something in this data which does seem to be systematically related to age ... but what?
+The model generalized very well! We may have found something in this data which does seem to be systematically related to age ... but what?
 
 +++
 
@@ -551,7 +532,7 @@ plotting.plot_connectome(feat_exp_matrix, coords, colorbar=True)
 Whoa!! That's...a lot to process. Maybe let's threshold the edges so that only the most important connections are visualized
 
 ```{code-cell} ipython3
-plotting.plot_connectome(feat_exp_matrix, coords, colorbar=True, edge_threshold=0.02)
+plotting.plot_connectome(feat_exp_matrix, coords, colorbar=True, edge_threshold=0.001)
 ```
 
 That's definitely an improvement, but it's still a bit hard to see what's going on.

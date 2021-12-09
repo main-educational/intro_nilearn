@@ -213,7 +213,7 @@ Let's download the first 30 participants.
 data_dir = './nilearn_data'
 # Now fetch the data
 from nilearn import datasets
-development_dataset = datasets.fetch_development_fmri(n_subjects=100,
+development_dataset = datasets.fetch_development_fmri(n_subjects=150,
                                                       data_dir=data_dir, 
                                                       reduce_confounds = False                                                      
                                                      )
