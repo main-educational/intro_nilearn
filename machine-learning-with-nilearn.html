@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Predict age from resting state fMRI (rs-fMRI) with scikit-learn &#8212; MAIN2021: Nilearn</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
@@ -274,11 +273,11 @@
 </div>
 </div>
 </div>
-<section class="tex2jax_ignore mathjax_ignore" id="predict-age-from-resting-state-fmri-rs-fmri-with-scikit-learn">
+<div class="tex2jax_ignore mathjax_ignore section" id="predict-age-from-resting-state-fmri-rs-fmri-with-scikit-learn">
 <h1>Predict age from resting state fMRI (rs-fMRI) with <a class="reference external" href="https://scikit-learn.org"><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code></a><a class="headerlink" href="#predict-age-from-resting-state-fmri-rs-fmri-with-scikit-learn" title="Permalink to this headline">¶</a></h1>
 <p>We will integrate what we’ve learned in the previous sections to extract data from <em>several</em> rs-fmri images, and use that data as features in a machine learning model</p>
 <p>The dataset consists of children (ages 3-13) and young adults (ages 18-39). We will use rs-fmri data to try to predict who are adults and who are children.</p>
-<section id="load-the-data">
+<div class="section" id="load-the-data">
 <h2>Load the data<a class="headerlink" href="#load-the-data" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -297,6 +296,68 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://osf.io/download/5c8ff4282286e80017c41c0a/ ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ...done. (3 seconds, 0 min)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://osf.io/download/5c8ff4292286e80017c41c0f/ ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ...done. (3 seconds, 0 min)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://osf.io/download/5cb4704ca3bc970018f1fcda/ ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ...done. (1 seconds, 0 min)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://osf.io/download/5cb46e0b39926900160f693c/ ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ...done. (3 seconds, 0 min)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://osf.io/download/5cb4704c3992690018133da6/ ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ...done. (2 seconds, 0 min)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://osf.io/download/5cb46e1c3992690018133aa2/ ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ...done. (3 seconds, 0 min)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://osf.io/download/5c8ff3dc4712b4001a3b55f0/ ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ...done. (2 seconds, 0 min)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://osf.io/download/5c8ff3df2286e80018c3e421/ ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ...done. (3 seconds, 0 min)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://osf.io/download/5cb47021353c58001b9cb59f/ ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ...done. (2 seconds, 0 min)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://osf.io/download/5cb46e2f353c58001b9cb2f1/ ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ...done. (4 seconds, 0 min)
+</pre></div>
+</div>
+</div>
 </div>
 <p>How many individual subjects do we have?</p>
 <div class="cell docutils container">
@@ -312,8 +373,8 @@
 </div>
 </div>
 </div>
-</section>
-<section id="get-y-our-target-and-assess-its-distribution">
+</div>
+<div class="section" id="get-y-our-target-and-assess-its-distribution">
 <h2>Get Y (our target) and assess its distribution<a class="headerlink" href="#get-y-our-target-and-assess-its-distribution" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -765,8 +826,8 @@ Name: Child_Adult, dtype: int64
 </div>
 </div>
 </div>
-</section>
-<section id="extract-features">
+</div>
+<div class="section" id="extract-features">
 <h2>Extract features<a class="headerlink" href="#extract-features" title="Permalink to this headline">¶</a></h2>
 <p>Here, we are going to use the same techniques we learned in the previous tutorial to extract rs-fmri connectivity features from every subject. Let’s reload our atlas, and re-iniate our masker and correlation_measure.</p>
 <div class="cell docutils container">
@@ -786,6 +847,17 @@ Name: Child_Adult, dtype: int64
 <span class="c1"># initialize correlation measure, set to vectorize</span>
 <span class="n">correlation_measure</span> <span class="o">=</span> <span class="n">ConnectivityMeasure</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;correlation&#39;</span><span class="p">,</span> <span class="n">vectorize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                          <span class="n">discard_diagonal</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset created in ./nilearn_data/basc_multiscale_2015
+
+Downloading data from https://ndownloader.figshare.com/files/1861819 ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ...done. (1 seconds, 0 min)
+Extracting data from ./nilearn_data/basc_multiscale_2015/53337d5c408465aa257d35f81c13413b/1861819..... done.
 </pre></div>
 </div>
 </div>
@@ -828,7 +900,9 @@ Name: Child_Adult, dtype: int64
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 7 of 66
-finished 8 of 66
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 8 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 9 of 66
@@ -868,7 +942,9 @@ finished 8 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 21 of 66
-finished 22 of 66
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 22 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 23 of 66
@@ -881,19 +957,27 @@ finished 22 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 26 of 66
-finished 27 of 66
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 27 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 28 of 66
-finished 29 of 66
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 29 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 30 of 66
-finished 31 of 66
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 31 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 32 of 66
-finished 33 of 66
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 33 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 34 of 66
@@ -924,11 +1008,15 @@ finished 33 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 43 of 66
-finished 44 of 66
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 44 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 45 of 66
-finished 46 of 66
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 46 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 47 of 66
@@ -941,15 +1029,21 @@ finished 46 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 50 of 66
-finished 51 of 66
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 51 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 52 of 66
-finished 53 of 66
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 53 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 54 of 66
-finished 55 of 66
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 55 of 66
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finished 56 of 66
@@ -1039,8 +1133,8 @@ finished 55 of 66
 <img alt="_images/machine-learning-with-nilearn_26_1.png" src="_images/machine-learning-with-nilearn_26_1.png" />
 </div>
 </div>
-</section>
-<section id="prepare-data-for-machine-learning">
+</div>
+<div class="section" id="prepare-data-for-machine-learning">
 <h2>Prepare data for machine learning<a class="headerlink" href="#prepare-data-for-machine-learning" title="Permalink to this headline">¶</a></h2>
 <p>Here, we will define a “training sample” where we can play around with our models. We will also set aside a “test” sample that we will not touch until the end</p>
 <p>We want to be sure that our training and test sample are matched! We can do that with a “stratified split”. Specifically, we will stratify by age class.</p>
@@ -1109,8 +1203,8 @@ finished 55 of 66
 <img alt="_images/machine-learning-with-nilearn_32_1.png" src="_images/machine-learning-with-nilearn_32_1.png" />
 </div>
 </div>
-</section>
-<section id="run-your-first-model">
+</div>
+<div class="section" id="run-your-first-model">
 <h2>Run your first model!<a class="headerlink" href="#run-your-first-model" title="Permalink to this headline">¶</a></h2>
 <p>Machine learning can get pretty fancy pretty quickly. We’ll start with a very standard classification model called a Support Vector Classifier (SVC).</p>
 <p>While this may seem unambitious, simple models can be very robust. And we don’t have enough data to create more complex models.</p>
@@ -1297,8 +1391,8 @@ weighted avg       0.96      0.96      0.96        52
 </div>
 </div>
 <p>so, as the classes are balanced, the chance level is close to 50%. The model performs significantly higher than chance.</p>
-</section>
-<section id="tweak-your-model">
+</div>
+<div class="section" id="tweak-your-model">
 <h2>Tweak your model<a class="headerlink" href="#tweak-your-model" title="Permalink to this headline">¶</a></h2>
 <p>It’s very important to learn when and where its appropriate to “tweak” your model.</p>
 <p>Since we have done all of the previous analysis in our training data, it’s find to try different models. But we <strong>absolutely cannot</strong> “test” it on our left out data. If we do, we are in great danger of overfitting.</p>
@@ -1403,8 +1497,8 @@ weighted avg       0.96      0.96      0.96        52
 </div>
 </div>
 </div>
-</section>
-<section id="can-our-model-classify-children-from-adults-in-completely-un-seen-data">
+</div>
+<div class="section" id="can-our-model-classify-children-from-adults-in-completely-un-seen-data">
 <h2>Can our model classify children from adults in completely un-seen data?<a class="headerlink" href="#can-our-model-classify-children-from-adults-in-completely-un-seen-data" title="Permalink to this headline">¶</a></h2>
 <p>Now that we’ve fit a model we think has possibly learned how to decode childhood vs adulthood based on rs-fmri signal, let’s put it to the test. We will train our model on all of the training data, and try to predict the age of the subjects we left out at the beginning of this section.</p>
 <p>Because we performed a transformation on our training data, we will need to transform our testing data using the <em>same information!</em></p>
@@ -1461,8 +1555,8 @@ weighted avg       1.00      1.00      1.00        14
 </div>
 </div>
 <p>The model generalized very well! We may have found something in this data which does seem to be systematically related to age … but what?</p>
-</section>
-<section id="interpreting-model-feature-importances">
+</div>
+<div class="section" id="interpreting-model-feature-importances">
 <h2>Interpreting model feature importances<a class="headerlink" href="#interpreting-model-feature-importances" title="Permalink to this headline">¶</a></h2>
 <p>Interpreting the feature importances of a machine learning model is a real can of worms. This is an area of active research. Unfortunately, it’s hard to trust the feature importance of some models.</p>
 <p>You can find a whole tutorial on this subject here:
@@ -1527,7 +1621,7 @@ weighted avg       1.00      1.00      1.00        14
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f6cc3a5ad90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f9d4da686d0&gt;
 </pre></div>
 </div>
 <img alt="_images/machine-learning-with-nilearn_74_1.png" src="_images/machine-learning-with-nilearn_74_1.png" />
@@ -1550,7 +1644,7 @@ weighted avg       1.00      1.00      1.00        14
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays.OrthoProjector at 0x7f6caabc4a00&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays.OrthoProjector at 0x7f9d4d87d190&gt;
 </pre></div>
 </div>
 <img alt="_images/machine-learning-with-nilearn_78_1.png" src="_images/machine-learning-with-nilearn_78_1.png" />
@@ -1564,7 +1658,7 @@ weighted avg       1.00      1.00      1.00        14
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays.OrthoProjector at 0x7f6ca23a58e0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays.OrthoProjector at 0x7f9d4507a5e0&gt;
 </pre></div>
 </div>
 <img alt="_images/machine-learning-with-nilearn_80_1.png" src="_images/machine-learning-with-nilearn_80_1.png" />
@@ -1954,8 +2048,8 @@ function decodeHemisphere(surfaceInfo, surface, hemisphere){
 </div>
 </div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
