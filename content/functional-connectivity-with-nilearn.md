@@ -77,7 +77,8 @@ haxby_func_filename = haxby_dataset.func[0]
 # initialise a masker
 brain_masker = NiftiMasker(
     smoothing_fwhm=6,
-    detrend=True, standardize=True, t_r=2,
+    detrend=True, standardize=True,
+    low_pass=0.1, high_pass=0.01, t_r=2,
     memory='nilearn_cache', memory_level=1, verbose=0)
 
 # Apply masker
