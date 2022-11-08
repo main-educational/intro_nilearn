@@ -45,16 +45,16 @@ with pre-extracted features of interest.
 This makes it easier to consider issues such as: which features would we like to predict?
 Or, how should we handle cross-validation?
 
-But if we're starting with neuroimaging data, how can create this kind of structured representation?
+But if we're starting with neuroimaging data, how can we create this kind of structured representation?
 
 To understand why neuroimaging data needs some special attention,
 we will briefly talk about the basics of fMRI.
 
 ## A brief introduction to functional magnetic resonance imaging
 
-Functional magnetic resonance imaging (fMRI) is a type of neuroimaging technique that measures the brain activity.
-They are made up of a series of 3D pictures of the brain collected at a given frequency.
-A typical fMRI file is a 4D image, with the spatial dimensions (x, y, z) added with the dimension of time t.
+Functional magnetic resonance imaging (fMRI) is a type of neuroimaging technique that measures brain activity.
+fMRI data is made up of a series of 3D images (or volumes) of the brain collected at a given frequency.
+Therefore, a typical fMRI file is a 4D image, with the spatial dimensions (x, y, z) added with the dimension of time t.
 We could, for example, acquire 1 brain volume every 2 seconds, for 6 minutes, which would result in an fMRI data file consisting of 180 3D brain volumes.
 
 ```{code-cell} ipython3
@@ -141,10 +141,10 @@ glue("voxel-timeseries-fig", fig, display=False)
 Illustration of a volume (voxel), size 3 mm x 3 mm x 3 mm, and the associated fMRI time course.
 ```
 
-A three dimensional brain volume is formed by several thousand voxels, which are small units of volumes having a coordinate in x, y, z space.
+A 3D brain volume is formed by several thousand voxels, which are small units of volumes having a coordinate in x, y, z space.
 In fMRI, for each voxel of the brain, we have several points of measurement of the activity over time, which forms what is called a time series or time course.
-The time series reflects changes in neuronal activity over time indirectly through the blood delivering energy to activate the neurons, called the haemodynamic response.
-This activity creates a contrast between the oxygenated vs deoxygenated blood around a population of the neuron detectable by the magnetic field, called the blood-oxygen-level-dependent (BOLD) signal.
+The time series reflects changes in neuronal activity over time indirectly through the blood delivering energy to activate the neurons, a mechanism called the haemodynamic response.
+This activity creates a contrast between oxygenated and deoxygenated blood around a population of neurons detectable by the magnetic field, called the blood-oxygen-level-dependent (BOLD) signal.
 
 ```{code-cell} ipython3
 # To get an impulse response, we simulate a single event
@@ -219,7 +219,7 @@ development_dataset = datasets.fetch_development_fmri(n_subjects=150,
                                                      )
 ```
 
-Now, this `development_dataset` object has several attributes which provide access to the relevant information.
+Now, this `development_dataset` object has several attributes which provide access to relevant information.
 For example, `development_dataset.phenotypic` provides access to information about the participants, such as whether they were children or adults.
 We can use `development_dataset.func` to access the functional MRI (fMRI) data.
 
@@ -264,7 +264,7 @@ and store it in a format that we can easily work with.
 Importantly, we _could_ work with the full time series directly.
 But we often want to reduce the dimensionality of our data in a structured way.
 That is, we may only want to consider signal within certain learned or pre-defined regions of interest (ROIs),
-and when taking into account known sources of noise.
+while taking into account known sources of noise.
 To do this, we'll use nilearn's Masker objects.
 What are the masker objects ?
 First, let's think about what masking fMRI data is doing:
@@ -324,15 +324,15 @@ Largely we can classify them in two ways:
 
 - Functional vs anatomical
 
-    - Anatomical atlas uses structural land marks to separate regions. Example: [Harvard-Oxford atlas](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_harvard_oxford.html)
-    - Functional atlas defines regions based on the organisation of fMRI signal, such as functional connectivity. Example: [Schaefer atlas](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html)
+    - Anatomical atlases use structural land marks to separate regions. Example: [Harvard-Oxford atlas](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_harvard_oxford.html)
+    - Functional atlases define regions based on the organisation of fMRI signal, such as functional connectivity. Example: [Schaefer atlas](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html)
 
 - Soft vs hard
 
-    - Soft, or probabilistic parcels uses contiunous, non-zero value to define regions.
+    - Soft, or probabilistic parcels use contiunous, non-zero values to define regions.
     Example: [Difumo (functional)](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_difumo.html#nilearn.datasets.fetch_atlas_difumo),
     [Hammersmith (anatomical)](https://pubmed.ncbi.nlm.nih.gov/12874777/)
-    - Hard parcels has rigid boundaries. Example: [BASC (functional)](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_basc_multiscale_2015.html#nilearn.datasets.fetch_atlas_basc_multiscale_2015)
+    - Hard parcels have rigid boundaries. Example: [BASC (functional)](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_basc_multiscale_2015.html#nilearn.datasets.fetch_atlas_basc_multiscale_2015)
 
 It's important to understand the method used for constructing the atlas of choice.
 For example, using a anatomical atlas to extract signal from functional data might not be the best thing.
@@ -391,7 +391,7 @@ roi_time_series = masker.transform(development_dataset.func[0])
 roi_time_series.shape
 ```
 
-If you'll remember, when we first looked at the data its original dimensions were (50, 59, 50, 168).
+If you remember, when we first looked at the data, its original dimensions were (50, 59, 50, 168).
 Now, it has a shape of (168, 39).
 What happened?!
 
@@ -400,10 +400,10 @@ we're now only considering those voxels that fall in our 39 regions of interest 
 This reduces each 3D volume from a dimensionality of (50, 59, 50) to just 39,
 for our 39 provided ROIs.
 
-You'll also see that the "dimensions flipped;"
-that is, that we've transposed the matrix such that time is now the first rather than second dimension.
-This follows the scikit-learn convention that rows in a data matrix are _samples_,
-and columns in a data matrix are _features_.
+You'll also see that the dimensions "flipped."
+That is, we've transposed the matrix such that time is now the first rather than second dimension.
+This follows the scikit-learn convention that rows are _samples_
+and columns are _features_ in a data matrix.
 
 ```{figure} ../images/samples-features.png
 ---
@@ -419,7 +419,7 @@ so you don't accidentally flip your dimensions when using a scikit-learn model!
 
 ## Creating and viewing a connectome
 
-Scientists found some cognitive functions involves the activity of neurons for an isolated region, and some times different regions of the brain interact together to perform a task.
+Scientists have found that some cognitive functions involve the activity of neurons from an isolated region, and sometimes different regions of the brain interact together to perform a task.
 This functional integration leads to a description of the functional brain as a network.
 Formally, the co-activation of different time series is called functional connectivity.
 
@@ -474,7 +474,7 @@ For most analyses, this list of confounds is reasonable, so we'll use these Nile
 We could access the full list by passing the argument `reduce_confounds=False` to our original call downloading the `development_dataset`.
 
 ```{warning}
-Never pass the full fMRIPrep confounds to denosing function.
+Never pass the full fMRIPrep confounds to the denoising function.
 ```
 
 For your own analyses, make sure to check which confounds you're using!
