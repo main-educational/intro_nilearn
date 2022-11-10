@@ -59,12 +59,9 @@ We could, for example, acquire 1 brain volume every 2 seconds, for 6 minutes, wh
 
 ```{code-cell} ipython3
 import pandas as pd
-import nilearn
 import numpy as np
 from nilearn import datasets
-from mpl_toolkits.mplot3d import Axes3D
-from nilearn.input_data import NiftiLabelsMasker, NiftiMasker
-from mpl_toolkits.mplot3d import Axes3D
+from nilearn import maskers
 import matplotlib.pyplot as plt
 
 # change this to the location where you want the data to get downloaded
@@ -75,7 +72,7 @@ haxby_dataset = datasets.fetch_haxby(data_dir=data_dir)
 haxby_func_filename = haxby_dataset.func[0]
 
 # initialise a masker
-brain_masker = NiftiMasker(
+brain_masker = maskers.NiftiMasker(
     smoothing_fwhm=6,
     detrend=True, standardize=True,
     low_pass=0.1, high_pass=0.01, t_r=2,
@@ -149,7 +146,6 @@ This activity creates a contrast between oxygenated and deoxygenated blood aroun
 ```{code-cell} ipython3
 # To get an impulse response, we simulate a single event
 # occurring at time t=0, with duration 1s.
-import numpy as np
 frame_times = np.linspace(0, 30, 61)
 onset, amplitude, duration = 0., 1., 1.
 exp_condition = np.array((onset, duration, amplitude)).reshape(3, 1)
@@ -158,7 +154,6 @@ stim[(frame_times > onset) * (frame_times <= onset + duration)] = amplitude
 
 # Now we plot the hrf
 from nilearn.glm.first_level import compute_regressor
-import matplotlib.pyplot as plt
 fig = plt.figure(figsize=(6, 4))
 
 # obtain the signal of interest by convolution
@@ -171,7 +166,6 @@ plt.fill(frame_times, stim, 'b', alpha=.5, label='stimulus')
 plt.plot(frame_times, signal.T[0], 'r', label=name[0])
 
 # Glue the figure
-from myst_nb import glue
 glue("hrf-fig", fig, display=False)
 ```
 
@@ -212,7 +206,6 @@ Let's download the first 30 participants.
 # change this to the location where you want the data to get downloaded
 data_dir = './nilearn_data'
 # Now fetch the data
-from nilearn import datasets
 development_dataset = datasets.fetch_development_fmri(n_subjects=150,
                                                       data_dir=data_dir, 
                                                       reduce_confounds = False                                                      
@@ -226,9 +219,9 @@ We can use `development_dataset.func` to access the functional MRI (fMRI) data.
 Let's use the [nibabel library](https://nipy.org/nibabel/) to learn a little bit about this data:
 
 ```{code-cell} ipython3
-import nibabel as nib
+from nilearn import image
 
-img = nib.load(development_dataset.func[0])
+img = image.load_img(development_dataset.func[0])
 img.shape
 ```
 
@@ -248,8 +241,6 @@ which allows us to take the mean 3D image over time.
 Putting these together, we can interactively view the mean image of the first participant using:
 
 ```{code-cell} ipython3
-import matplotlib.pyplot as plt
-from nilearn import image
 from nilearn import plotting
 
 mean_image = image.mean_img(development_dataset.func[0])
@@ -299,8 +290,6 @@ we'll use the MSDL (multi-subject dictionary learning; {cite:p}`Varoquaux_2011`)
 which defines a set of _probabilistic_ ROIs across the brain.
 
 ```{code-cell} ipython3
-import numpy as np
-
 msdl_atlas = datasets.fetch_atlas_msdl(data_dir=data_dir)
 
 msdl_coords = msdl_atlas.region_coords
@@ -369,9 +358,7 @@ We can supply our MSDL atlas-defined ROIs to the `NiftiMapsMasker` object,
 along with resampling, filtering, and detrending parameters.
 
 ```{code-cell} ipython3
-from nilearn import input_data
-
-masker = input_data.NiftiMapsMasker(
+masker = maskers.NiftiMapsMasker(
     msdl_atlas.maps, resampling_target="data", detrend=True).fit()
 ```
 
