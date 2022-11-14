@@ -47,7 +47,6 @@ confounds = development_dataset.confounds
 How many individual subjects do we have?
 
 ```{code-cell} ipython3
-#len(data.func)
 len(data)
 ```
 
@@ -73,7 +72,7 @@ Let's have a look at the distribution of our target variable
 ```{code-cell} ipython3
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.countplot(y_ageclass)
+sns.countplot(x=y_ageclass)
 pheno.Child_Adult.value_counts()
 ```
 
@@ -206,10 +205,11 @@ Let's visualize the distributions to be sure they are matched
 
 ```{code-cell} ipython3
 fig,(ax1,ax2) = plt.subplots(2)
-sns.countplot(y_train, ax=ax1, order=['child','adult'])
+sns.countplot(x=y_train, ax=ax1, order=['child','adult'])
 ax1.set_title('Train')
-sns.countplot(y_test, ax=ax2, order=['child','adult'])
+sns.countplot(x=y_test, ax=ax2, order=['child','adult'])
 ax2.set_title('Test')
+plt.tight_layout()
 ```
 
 ## Run your first model!
