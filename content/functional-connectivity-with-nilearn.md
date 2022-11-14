@@ -172,7 +172,7 @@ glue("hrf-fig", fig, display=False)
 ```{glue:figure} hrf-fig
 :figwidth: 800px
 :name: "hrf-fig"
-Hemodynamic response to a unit pulse of one second duration, following the model proposed by {cite:p}`Glover_1999`. The code generated this figure is adopted from a [tutorial](https://nilearn.github.io/auto_examples/04_glm_first_level/plot_hrf.html#sphx-glr-auto-examples-04-glm-first-level-plot-hrf-py) in Nilearn, et la. The figure is licenced under CC-BY.
+Hemodynamic response to a unit pulse of one second duration, following the model proposed by {cite:p}`Glover_1999`. The code generated this figure is adopted from a [tutorial](https://nilearn.github.io/stable/auto_examples/04_glm_first_level/plot_hrf.html#sphx-glr-auto-examples-04-glm-first-level-plot-hrf-py) in Nilearn, et la. The figure is licenced under CC-BY.
 ```
 
 ## Neuroimaging data
@@ -198,7 +198,7 @@ The data set we'll use today was originally collected by [Rebecca Saxe](https://
 
 The nilearn team preprocessed the data set with [fMRIPrep](https://fmriprep.readthedocs.io) and downsampled it to a lower resolution,
 so it'd be easier to work with.
-We can learn a lot about this data set directly [from the Nilearn documentation](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_development_fmri.html).
+We can learn a lot about this data set directly [from the Nilearn documentation](https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_development_fmri.html).
 For example, we can see that this data set contains over 150 children and adults watching a short Pixar film.
 Let's download the first 30 participants.
 
@@ -216,7 +216,7 @@ Now, this `development_dataset` object has several attributes which provide acce
 For example, `development_dataset.phenotypic` provides access to information about the participants, such as whether they were children or adults.
 We can use `development_dataset.func` to access the functional MRI (fMRI) data.
 
-Let's use the [nibabel library](https://nipy.org/nibabel/) to learn a little bit about this data:
+Let's use [`nilearn.image.load_img`](https://nilearn.github.io/stable/modules/generated/nilearn.image.load_img.html) to learn a little bit about this data:
 
 ```{code-cell} ipython3
 from nilearn import image
@@ -230,12 +230,12 @@ This means that there are 168 volumes, each with a 3D structure of (50, 59, 50).
 ## Getting into the data: subsetting and viewing
 
 Nilearn also provides many methods for plotting this kind of data.
-For example, we can use [`nilearn.plotting.view_img`](https://nilearn.github.io/modules/generated/nilearn.plotting.view_img.html) to launch at interactive viewer.
+For example, we can use [`nilearn.plotting.view_img`](https://nilearn.github.io/stable/modules/generated/nilearn.plotting.view_img.html) to launch at interactive viewer.
 Because each fMRI run is a 4D time series (three spatial dimensions plus time),
 we'll also need to subset the data when we plot it, so that we can look at a single 3D image.
-Nilearn provides (at least) two ways to do this: with [`nilearn.image.index_img`](https://nilearn.github.io/modules/generated/nilearn.image.index_img.html),
+Nilearn provides (at least) two ways to do this: with [`nilearn.image.index_img`](https://nilearn.github.io/stable/modules/generated/nilearn.image.index_img.html),
 which allows us to index a particular frame--or several frames--of a time series,
-and [`nilearn.image.mean_img`](https://nilearn.github.io/modules/generated/nilearn.image.mean_img.html),
+and [`nilearn.image.mean_img`](https://nilearn.github.io/stable/modules/generated/nilearn.image.mean_img.html),
 which allows us to take the mean 3D image over time.
 
 Putting these together, we can interactively view the mean image of the first participant using:
@@ -313,15 +313,15 @@ Largely we can classify them in two ways:
 
 - Functional vs anatomical
 
-    - Anatomical atlases use structural land marks to separate regions. Example: [Harvard-Oxford atlas](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_harvard_oxford.html)
-    - Functional atlases define regions based on the organisation of fMRI signal, such as functional connectivity. Example: [Schaefer atlas](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html)
+    - Anatomical atlases use structural land marks to separate regions. Example: [Harvard-Oxford atlas](https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_atlas_harvard_oxford.html)
+    - Functional atlases define regions based on the organisation of fMRI signal, such as functional connectivity. Example: [Schaefer atlas](https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html)
 
 - Soft vs hard
 
     - Soft, or probabilistic parcels use contiunous, non-zero values to define regions.
-    Example: [Difumo (functional)](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_difumo.html#nilearn.datasets.fetch_atlas_difumo),
+    Example: [Difumo (functional)](https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_atlas_difumo.html#nilearn.datasets.fetch_atlas_difumo),
     [Hammersmith (anatomical)](https://pubmed.ncbi.nlm.nih.gov/12874777/)
-    - Hard parcels have rigid boundaries. Example: [BASC (functional)](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_basc_multiscale_2015.html#nilearn.datasets.fetch_atlas_basc_multiscale_2015)
+    - Hard parcels have rigid boundaries. Example: [BASC (functional)](https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_atlas_basc_multiscale_2015.html#nilearn.datasets.fetch_atlas_basc_multiscale_2015)
 
 It's important to understand the method used for constructing the atlas of choice.
 For example, using a anatomical atlas to extract signal from functional data might not be the best thing.
@@ -334,22 +334,22 @@ We'd like to supply these ROIs to a Masker object.
 All Masker objects share the same basic structure and functionality,
 but each is designed to work with a different kind of ROI.
 
-The canonical [`nilearn.input_data.NiftiMasker`](https://nilearn.github.io/modules/generated/nilearn.input_data.NiftiMasker.html) works well if we want to apply a single mask to the data,
+The canonical [`nilearn.maskers.NiftiMasker`](https://nilearn.github.io/stable/modules/generated/nilearn.maskers.NiftiMasker.html) works well if we want to apply a single mask to the data,
 like a single region of interest.
 
 But what if we actually have several ROIs that we'd like to apply to the data all at once?
 If these ROIs are non-overlapping,
 as in "hard" or deterministic parcellations,
-then we can use [`nilearn.input_data.NiftiLabelsMasker`](https://nilearn.github.io/modules/generated/nilearn.input_data.NiftiLabelsMasker.html).
+then we can use [`nilearn.maskers.NiftiLabelsMasker`](https://nilearn.github.io/stable/modules/generated/nilearn.maskers.NiftiLabelsMasker.html).
 Because we're working with "soft" or probabilistic ROIs,
-we can instead supply these ROIs to [`nilearn.input_data.NiftiMapsMasker`](https://nilearn.github.io/modules/generated/nilearn.input_data.NiftiMapsMasker.html).
+we can instead supply these ROIs to [`nilearn.maskers.NiftiMapsMasker`](https://nilearn.github.io/stable/modules/generated/nilearn.maskers.NiftiMapsMasker.html).
 
 ```{admonition} Further reading on Maskers
 :class: note
 For a full list of the available Masker objects,
-see [the Nilearn documentation](https://nilearn.github.io/modules/reference.html#module-nilearn.input_data).
+see [the Nilearn documentation](https://nilearn.github.io/stable/modules/maskers.html).
 
-To learn more about the concept, `nilearn` provides a great [tutorial](https://nilearn.github.io/manipulating_images/masker_objects.html).
+To learn more about the concept, `nilearn` provides a great [tutorial](https://nilearn.github.io/stable/manipulating_images/masker_objects.html).
 ```
 
 ## Applying a Masker object
@@ -412,7 +412,7 @@ Formally, the co-activation of different time series is called functional connec
 
 The simplest and most commonly used kind of functional connectivity is pairwise correlation between ROIs.
 
-We can estimate it using [`nilearn.connectome.ConnectivityMeasure`](https://nilearn.github.io/modules/generated/nilearn.connectome.ConnectivityMeasure.html).
+We can estimate it using [`nilearn.connectome.ConnectivityMeasure`](https://nilearn.github.io/stable/modules/generated/nilearn.connectome.ConnectivityMeasure.html).
 
 ```{code-cell} ipython3
 from nilearn.connectome import ConnectivityMeasure
@@ -465,12 +465,12 @@ Never pass the full fMRIPrep confounds to the denoising function.
 ```
 
 For your own analyses, make sure to check which confounds you're using!
-In the up and coming update of nilearn, a new module `nilearn.interfaces.fmriprep` has been added.
-We implemented function [`load_confounds`](https://nilearn.github.io/dev/modules/generated/nilearn.interfaces.fmriprep.load_confounds.html)
-and [`load_confounds_strategy`](https://nilearn.github.io/dev/modules/generated/nilearn.interfaces.fmriprep.load_confounds_strategy.html)
+In the recent version of nilearn, a new module `nilearn.interfaces.fmriprep` has been added.
+We implemented function [`load_confounds`](https://nilearn.github.io/stable/modules/generated/nilearn.interfaces.fmriprep.load_confounds.html)
+and [`load_confounds_strategy`](https://nilearn.github.io/stable/modules/generated/nilearn.interfaces.fmriprep.load_confounds_strategy.html)
 to help you select confound variables based on existing literature and fMRIPrep documentations.
-For a sneak peak, please refer to the
-[development version of the nilearn document](https://nilearn.github.io/dev/auto_examples/03_connectivity/plot_signal_extraction.html#sphx-glr-auto-examples-03-connectivity-plot-signal-extraction-py).
+For more information, please refer to the
+[this nilearn document](https://nilearn.github.io/stable/auto_examples/03_connectivity/plot_signal_extraction.html#sphx-glr-auto-examples-03-connectivity-plot-signal-extraction-py).
 ````
 
 Importantly, we can pass these confounds directly to our masker object:
