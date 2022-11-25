@@ -21,7 +21,7 @@ warnings.filterwarnings('ignore')
 
 # Predict age from resting state fMRI (rs-fMRI) with [`scikit-learn`](https://scikit-learn.org)
 
-We will integrate what we've learned in the previous sections to extract data from *several* rs-fmri images, and use that data as features in a machine learning model
+We will integrate what we've learned in the previous sections to extract data from *several* rs-fmri images, and use that data as features in a machine learning model.
 
 The dataset consists of children (ages 3-13) and young adults (ages 18-39). We will use rs-fmri data to try to predict who are adults and who are children.
 
@@ -47,7 +47,6 @@ confounds = development_dataset.confounds
 How many individual subjects do we have?
 
 ```{code-cell} ipython3
-#len(data.func)
 len(data)
 ```
 
@@ -73,11 +72,11 @@ Let's have a look at the distribution of our target variable
 ```{code-cell} ipython3
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.countplot(y_ageclass)
+sns.countplot(x=y_ageclass)
 pheno.Child_Adult.value_counts()
 ```
 
-This is very unbalanced -- there seems to be much more children than adults. It is something we can accomodate to a degree when training our model, but it is not within the scope of this tutorial. So let's select an arbitrary subset of the children to match the number of adults. As the 32 adults are at the beginning of the frame, this is easy to do:
+This is very unbalanced -- there seems to be many more children than adults. It is something we can accomodate to a degree when training our model, but it is not within the scope of this tutorial. So let's select an arbitrary subset of the children to match the number of adults. As the 32 adults are at the beginning of the frame, this is easy to do:
 
 ```{code-cell} ipython3
 data = data[0:66]
@@ -89,7 +88,7 @@ y_ageclass = pheno['Child_Adult']
 
 +++
 
-Here, we are going to use the same techniques we learned in the previous tutorial to extract rs-fmri connectivity features from every subject. Let's reload our atlas, and re-iniate our masker and correlation_measure.
+Here, we are going to use the same techniques we learned in the previous tutorial to extract rs-fmri connectivity features from every subject. Let's reload our atlas, and re-initiate our masker and correlation_measure.
 
 ```{code-cell} ipython3
 from nilearn.input_data import NiftiLabelsMasker
@@ -113,7 +112,7 @@ Okay -- now that we have that taken care of, let's load all of the data!
 
 +++
 
-**NOTE**: On a laptop, this might a few minutes.
+**NOTE**: On a laptop, this might take a few minutes.
 
 ```{code-cell} ipython3
 all_features = [] # here is where we will put the data (a container)
@@ -165,7 +164,7 @@ plt.ylabel('subjects')
 
 ## Prepare data for machine learning
 
-Here, we will define a "training sample" where we can play around with our models. We will also set aside a "test" sample that we will not touch until the end
+Here, we will define a "training sample" where we can play around with our models. We will also set aside a "test" sample that we will not touch until the end.
 
 +++
 
@@ -206,15 +205,16 @@ Let's visualize the distributions to be sure they are matched
 
 ```{code-cell} ipython3
 fig,(ax1,ax2) = plt.subplots(2)
-sns.countplot(y_train, ax=ax1, order=['child','adult'])
+sns.countplot(x=y_train, ax=ax1, order=['child','adult'])
 ax1.set_title('Train')
-sns.countplot(y_test, ax=ax2, order=['child','adult'])
+sns.countplot(x=y_test, ax=ax2, order=['child','adult'])
 ax2.set_title('Test')
+plt.tight_layout()
 ```
 
 ## Run your first model!
 
-Machine learning can get pretty fancy pretty quickly. We'll start with a very standard classification model called a Support Vector Classifier (SVC).
+Machine learning can get pretty fancy very quickly. We'll start with a very standard classification model called a Support Vector Classifier (SVC).
 
 While this may seem unambitious, simple models can be very robust. And we don't have enough data to create more complex models.
 
@@ -240,7 +240,7 @@ l_svc.fit(X_train, y_train) # fit the model
 Well... that was easy. Let's see how well the model learned the data!
 
 We can judge our model on several criteria:
-* Accuracy: The proportion of predictions that were correct overall.
+* Accuracy: The proportion of predictions that were correct overall
 * Precision: Accuracy of cases predicted as positive
 * Recall: Number of true positives correctly predicted to be positive
 * f1 score: A balance between precision and recall
@@ -353,15 +353,15 @@ so, as the classes are balanced, the chance level is close to 50%. The model per
 
 ## Tweak your model
 
-It's very important to learn when and where its appropriate to "tweak" your model.
+It's very important to learn when and where it's appropriate to "tweak" your model.
 
-Since we have done all of the previous analysis in our training data, it's find to try different models. But we **absolutely cannot** "test" it on our left out data. If we do, we are in great danger of overfitting.
+Since we have done all of the previous analysis with our training data, it's fine to try different models. But we **absolutely cannot** "test" it on our left-out-data. If we do, we are in great danger of overfitting.
 
 We could try other models, or tweak hyperparameters, but we are probably not powered sufficiently to do so, and would once again risk overfitting.
 
 +++
 
-But as a demonstration, we could see the impact of "scaling" our data. Certain machine learning algorithms perform better when all the input data is transformed to a uniform range of values. This is often between 0 and 1, or mean centered around with unit variance. We can perhaps look at the performance of the model after scaling the data
+But as a demonstration, we could see the impact of "scaling" our data. Certain machine learning algorithms perform better when all the input data is transformed to a uniform range of values. This is often between 0 and 1, or mean centered around with unit variance. We can perhaps look at the performance of the model after scaling the data.
 
 ```{code-cell} ipython3
 # Scale the training data
@@ -426,14 +426,14 @@ What do you think about the results of this model compared to the non-transforme
 ```
 
 ## Can our model classify children from adults in completely un-seen data?
-Now that we've fit a model we think has possibly learned how to decode childhood vs adulthood based on rs-fmri signal, let's put it to the test. We will train our model on all of the training data, and try to predict the age of the subjects we left out at the beginning of this section.
+Now that we've fit a model that we think has possibly learned how to decode childhood vs adulthood based on rs-fmri signal, let's put it to the test. We will train our model on all the training data, and try to predict the age of the subjects we left out at the beginning of this section.
 
 +++
 
 Because we performed a transformation on our training data, we will need to transform our testing data using the *same information!*
 
 ```{code-cell} ipython3
-# Notice how we use the Scaler that was fit to X_train and apply to X_test,
+# Notice how we use the Scaler that was fit to X_train and apply it to X_test,
 # rather than creating a new Scaler for X_test
 X_test_scl = scaler.transform(X_test)
 ```
@@ -477,17 +477,17 @@ Interpreting the feature importances of a machine learning model is a real can o
 You can find a whole tutorial on this subject here:
 http://gael-varoquaux.info/interpreting_ml_tuto/index.html
 
-For now, we'll just eschew better judgement and take a look at our feature importances
+For now, we'll just eschew better judgement and take a look at our feature importances.
 
 +++
 
-We can access the feature importances (weights) used my the model
+We can access the feature importances (weights) used by the model
 
 ```{code-cell} ipython3
 l_svc.coef_
 ```
 
-lets plot these weights to see their distribution better
+Let's plot these weights to see their distribution better
 
 ```{code-cell} ipython3
 plt.bar(range(l_svc.coef_.shape[-1]),l_svc.coef_[0])
@@ -536,7 +536,7 @@ plotting.plot_connectome(feat_exp_matrix, coords, colorbar=True, edge_threshold=
 ```
 
 That's definitely an improvement, but it's still a bit hard to see what's going on.
-Nilearn has a new feature that let's use view this data interactively!
+Nilearn has a new feature that lets us view this data interactively!
 
 ```{code-cell} ipython3
 plotting.view_connectome(feat_exp_matrix, coords, edge_threshold='90%')
