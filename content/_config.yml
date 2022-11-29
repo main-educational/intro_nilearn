@@ -1,9 +1,9 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: "MAIN2021: Nilearn" 
-author:  François Paugam, Hao-Ting Wang  
-copyright: "2021" 
+title: "MAIN2022: Machine learning in functional MRI using Nilearn" 
+author:  Yasmin Mzayek, Hao-Ting Wang
+copyright: "2022" 
 logo: "../images/nilearn-logo.png" 
 
 execute:
