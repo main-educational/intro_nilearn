@@ -4,8 +4,8 @@ These two tutorials will introduce you to the [nilearn](https://nilearn.github.i
 library to manipulate and process fMRI data, and to [scikit-learn](https://scikit-learn.org/stable/) 
 to apply machine learning techniques on your data.
 
-It was developed for use at the [Montreal AI and Neuroscience (MAIN)](https://www.main2021.org/) 
-conference in November 2021.
+It was developed for use at the [Montreal AI and Neuroscience (MAIN) 
+educational workshop](https://main-educational.github.io) in [November 2021](https://www.main2021.org/) and [December 2022](https://www.main2022.org).
 
 ## Setup
 
@@ -74,14 +74,15 @@ For the full experience, we recommend using the local set up instruction.
 
 ## Acknowledgements
 
-This tutorial was presented by 
-[François Paugam](https://github.com/FrancoisPgm),
+This tutorial is presented by 
+[Yasmin Mzayek](https://github.com/ymzayek),
 and [Hao-Ting Wang](https://wanghaoting.com/).
 
 It is rendered here using [Jupyter Book](https://github.com/jupyter/jupyter-book),
 <!-- with compute infrastructure provided by the [Canadian Open Neuroscience Platform (CONP)](http://conp.ca). -->
 
 The content of notebook was iterated based on work from the past presentors:
+[François Paugam](https://github.com/FrancoisPgm),
 [Pierre Bellec](https://simexp.github.io/lab-website/),
 [Elizabeth DuPre](https://elizabeth-dupre.com),
 [Greg Kiar](http://gkiar.me),
