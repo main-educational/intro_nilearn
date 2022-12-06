@@ -15,7 +15,7 @@ kernelspec:
 
 # Functional connectiviy with [`nilearn`](http://nilearn.github.io)
 
-```{code-cell} ipython3
+```{code-cell} python3
 import warnings
 warnings.filterwarnings("ignore")
 ```
@@ -31,7 +31,7 @@ and nilearn is designed to bring machine **LEARN**ing to the NeuroImaging (**NI*
 
 When performing a machine learning analysis, our data often look something like this:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import pandas as pd
 
 # read_csv can read in just about any plain-text tabular data
@@ -57,7 +57,8 @@ fMRI data is made up of a series of 3D images (or volumes) of the brain collecte
 Therefore, a typical fMRI file is a 4D image, with the spatial dimensions (x, y, z) added with the dimension of time t.
 We could, for example, acquire 1 brain volume every 2 seconds, for 6 minutes, which would result in an fMRI data file consisting of 180 3D brain volumes.
 
-```{code-cell} ipython3
+```{code-cell} python3
+:tags: [hide-output]
 import pandas as pd
 import numpy as np
 from nilearn import datasets
@@ -143,7 +144,9 @@ In fMRI, for each voxel of the brain, we have several points of measurement of t
 The time series reflects changes in neuronal activity over time indirectly through the blood delivering energy to activate the neurons, a mechanism called the haemodynamic response.
 This activity creates a contrast between oxygenated and deoxygenated blood around a population of neurons detectable by the magnetic field, called the blood-oxygen-level-dependent (BOLD) signal.
 
-```{code-cell} ipython3
+```{code-cell} python3
+:tags: [hide-output]
+
 # To get an impulse response, we simulate a single event
 # occurring at time t=0, with duration 1s.
 frame_times = np.linspace(0, 30, 61)
@@ -202,11 +205,12 @@ We can learn a lot about this data set directly [from the Nilearn documentation]
 For example, we can see that this data set contains over 150 children and adults watching a short Pixar film.
 Let's download the first 30 participants.
 
-```{code-cell} ipython3
+```{code-cell} python3
+:tags: [hide-output]
 # change this to the location where you want the data to get downloaded
 data_dir = './nilearn_data'
 # Now fetch the data
-development_dataset = datasets.fetch_development_fmri(n_subjects=150,
+development_dataset = datasets.fetch_development_fmri(n_subjects=10,
                                                       data_dir=data_dir, 
                                                       reduce_confounds = False                                                      
                                                      )
@@ -218,7 +222,7 @@ We can use `development_dataset.func` to access the functional MRI (fMRI) data.
 
 Let's use [`nilearn.image.load_img`](https://nilearn.github.io/stable/modules/generated/nilearn.image.load_img.html) to learn a little bit about this data:
 
-```{code-cell} ipython3
+```{code-cell} python3
 from nilearn import image
 
 img = image.load_img(development_dataset.func[0])
@@ -240,7 +244,7 @@ which allows us to take the mean 3D image over time.
 
 Putting these together, we can interactively view the mean image of the first participant using:
 
-```{code-cell} ipython3
+```{code-cell} python3
 from nilearn import plotting
 
 mean_image = image.mean_img(development_dataset.func[0])
@@ -289,7 +293,7 @@ In this tutorial,
 we'll use the MSDL (multi-subject dictionary learning; {cite:p}`Varoquaux_2011`) atlas,
 which defines a set of _probabilistic_ ROIs across the brain.
 
-```{code-cell} ipython3
+```{code-cell} python3
 msdl_atlas = datasets.fetch_atlas_msdl(data_dir=data_dir)
 
 msdl_coords = msdl_atlas.region_coords
@@ -301,7 +305,7 @@ print(f'MSDL has {n_regions} ROIs, part of the following networks :\n{np.unique(
 It also provides us with easy ways to view these atlases directly.
 Because MSDL is a probabilistic atlas, we can view it using:
 
-```{code-cell} ipython3
+```{code-cell} python3
 plotting.plot_prob_atlas(msdl_atlas.maps)
 ```
 
@@ -357,7 +361,7 @@ To learn more about the concept, `nilearn` provides a great [tutorial](https://n
 We can supply our MSDL atlas-defined ROIs to the `NiftiMapsMasker` object,
 along with resampling, filtering, and detrending parameters.
 
-```{code-cell} ipython3
+```{code-cell} python3
 masker = maskers.NiftiMapsMasker(
     msdl_atlas.maps, resampling_target="data", detrend=True).fit()
 ```
@@ -373,7 +377,7 @@ that's because we're fitting the Masker to the provided ROIs, rather than to our
 
 We can use this fitted masker to transform our data.
 
-```{code-cell} ipython3
+```{code-cell} python3
 roi_time_series = masker.transform(development_dataset.func[0])
 roi_time_series.shape
 ```
@@ -414,7 +418,7 @@ The simplest and most commonly used kind of functional connectivity is pairwise 
 
 We can estimate it using [`nilearn.connectome.ConnectivityMeasure`](https://nilearn.github.io/stable/modules/generated/nilearn.connectome.ConnectivityMeasure.html).
 
-```{code-cell} ipython3
+```{code-cell} python3
 from nilearn.connectome import ConnectivityMeasure
 
 correlation_measure = ConnectivityMeasure(kind='correlation')
@@ -423,7 +427,7 @@ correlation_matrix = correlation_measure.fit_transform([roi_time_series])[0]
 
 We can then plot this functional connectivity matrix:
 
-```{code-cell} ipython3
+```{code-cell} python3
 np.fill_diagonal(correlation_matrix, 0)
 plotting.plot_matrix(correlation_matrix, labels=msdl_atlas.labels,
                      vmax=0.8, vmin=-0.8, colorbar=True)
@@ -431,7 +435,7 @@ plotting.plot_matrix(correlation_matrix, labels=msdl_atlas.labels,
 
 Or view it as an embedded connectome:
 
-```{code-cell} ipython3
+```{code-cell} python3
 plotting.view_connectome(correlation_matrix, edge_threshold=0.2,
                          node_coords=msdl_atlas.region_coords)
 ```
@@ -447,7 +451,7 @@ using `development_dataset.confounds`.
 
 Let's quickly check what these look like for our first participant:
 
-```{code-cell} ipython3
+```{code-cell} python3
 pd.read_table(development_dataset.confounds[0]).head()
 ```
 
@@ -475,7 +479,7 @@ For more information, please refer to the
 
 Importantly, we can pass these confounds directly to our masker object:
 
-```{code-cell} ipython3
+```{code-cell} python3
 corrected_roi_time_series = masker.transform(
     development_dataset.func[0], confounds=development_dataset.confounds[0])
 corrected_correlation_matrix = correlation_measure.fit_transform(
@@ -487,7 +491,7 @@ plotting.plot_matrix(corrected_correlation_matrix, labels=msdl_atlas.labels,
 
 As before, we can also view this functional connectivity matrix as a connectome:
 
-```{code-cell} ipython3
+```{code-cell} python3
 plotting.view_connectome(corrected_correlation_matrix, edge_threshold=0.2,
                          node_coords=msdl_atlas.region_coords)
 ```
