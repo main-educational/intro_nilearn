@@ -118,7 +118,7 @@ Okay -- now that we have that taken care of, let's load all of the data!
 **NOTE**: On a laptop, this might take a few minutes.
 
 ```{code-cell} python3
-:tags: [hide-output]
+:tags: [hide-output] 
 
 all_features = [] # here is where we will put the data (a container)
 

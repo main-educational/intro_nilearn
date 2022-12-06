@@ -58,7 +58,7 @@ Therefore, a typical fMRI file is a 4D image, with the spatial dimensions (x, y,
 We could, for example, acquire 1 brain volume every 2 seconds, for 6 minutes, which would result in an fMRI data file consisting of 180 3D brain volumes.
 
 ```{code-cell} python3
-:tags: [hide-input, hide-output]
+:tags: [hide-output]
 import pandas as pd
 import numpy as np
 from nilearn import datasets
