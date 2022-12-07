@@ -27,7 +27,7 @@ is a quick guide to install python 3 on any OS.
 
     ```bash
     git clone https://github.com/main-educational/intro_nilearn.git
-    cd intro_nilearn
+    cd intro_ML
     ```
 
 2. We encourage you to use a virtual environment for this tutorial 
