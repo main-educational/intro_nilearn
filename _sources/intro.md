@@ -26,8 +26,8 @@ is a quick guide to install python 3 on any OS.
 1. Clone/download this repository to your machine and navigate to the directory.
 
     ```bash
-    git clone https://github.com/main-educational/intro_ML.git
-    cd intro_ML
+    git clone https://github.com/main-educational/intro_nilearn.git
+    cd intro_nilearn
     ```
 
 2. We encourage you to use a virtual environment for this tutorial 
@@ -76,7 +76,7 @@ For the full experience, we recommend using the local set up instruction.
 
 This tutorial is presented by 
 [Yasmin Mzayek](https://github.com/ymzayek),
-and [Hao-Ting Wang](https://wanghaoting.com/).
+and [Hao-Ting Wang](https://github.com/htwangtw).
 
 It is rendered here using [Jupyter Book](https://github.com/jupyter/jupyter-book),
 <!-- with compute infrastructure provided by the [Canadian Open Neuroscience Platform (CONP)](http://conp.ca). -->

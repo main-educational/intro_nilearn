@@ -19,11 +19,11 @@ import warnings
 warnings.filterwarnings('ignore')
 ```
 
-# Predict age from resting state fMRI (rs-fMRI) with [`scikit-learn`](https://scikit-learn.org)
+# Predict age from resting state fMRI with [`scikit-learn`](https://scikit-learn.org)
 
-We will integrate what we've learned in the previous sections to extract data from *several* rs-fmri images, and use that data as features in a machine learning model.
+We will integrate what we've learned in the previous sections to extract data from *several* resting state fMRI images, and use that data as features in a machine learning model.
 
-The dataset consists of children (ages 3-13) and young adults (ages 18-39). We will use rs-fmri data to try to predict who are adults and who are children.
+The dataset consists of children (ages 3-13) and young adults (ages 18-39). We will use resting state fMRI data to try to predict who are adults and who are children.
 
 +++
 
@@ -89,7 +89,7 @@ y_ageclass = pheno['Child_Adult']
 
 +++
 
-Here, we are going to use the same techniques we learned in the previous tutorial to extract rs-fmri connectivity features from every subject. Let's reload our atlas, and re-initiate our masker and correlation_measure.
+Here, we are going to use the same techniques we learned in the previous tutorial to extract resting state fMRI connectivity features from every subject. Let's reload our atlas, and re-initiate our masker and correlation_measure.
 
 ```{code-cell} python3
 :tags: [hide-output]
@@ -173,7 +173,8 @@ Here, we will define a "training sample" where we can play around with our model
 
 +++
 
-We want to be sure that our training and test sample are matched! We can do that with a "stratified split". Specifically, we will stratify by age class.
+We want to be sure that our training and test sample are matched! We can do that with a "stratified split". 
+Specifically, we will stratify by age class.
 
 ```{code-cell} python3
 y_ageclass.shape
@@ -254,6 +255,8 @@ Or, for a more visual explanation...
 
 ![](https://upload.wikimedia.org/wikipedia/commons/2/26/Precisionrecall.svg)
 
+### Let's train a model
+
 ```{code-cell} python3
 from sklearn.metrics import classification_report, confusion_matrix, precision_score, f1_score
 
@@ -293,15 +296,31 @@ for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
                  color="white")
 ```
 
-![](https://sebastianraschka.com/images/faq/multiclass-metric/conf_mat.png)
+````{admonition} Exercise
+:class: warning
 
-+++
+You can intepret the confusion matrix accroding to this reference graph.
+
+![](https://sebastianraschka.com/images/faq/multiclass-metric/conf_mat.png)
 
 HOLY COW! Machine learning is amazing!!! Almost a perfect fit!
 
 ...which means there's something wrong. What's the problem here?
+````
+
+````{admonition} Solution
+:class: dropdown
+
+The model was not cross validated. 
+
+Scroll down and unfold the cells to see the answer!
+
+````
+
+### Fit the model with the training data and cross-validation
 
 ```{code-cell} python3
+:tags: [hide-input, hide-output]
 from sklearn.model_selection import cross_val_predict, cross_val_score
 
 # predict
@@ -315,6 +334,9 @@ acc = cross_val_score(l_svc, X_train, y_train,
 We can look at the accuracy of the predictions for each fold of the cross-validation
 
 ```{code-cell} python3
+
+:tags: [hide-input, hide-output]
+
 for i in range(len(acc)):
     print('Fold %s -- Acc = %s'%(i, acc[i]))
 ```
@@ -322,6 +344,9 @@ for i in range(len(acc)):
 We can also look at the overall accuracy of the model
 
 ```{code-cell} python3
+
+:tags: [hide-input, hide-output]
+
 from sklearn.metrics import accuracy_score
 overall_acc = accuracy_score(y_pred = y_pred, y_true = y_train)
 overall_cr = classification_report(y_pred = y_pred, y_true = y_train)
@@ -331,6 +356,10 @@ print(overall_cr)
 ```
 
 ```{code-cell} python3
+
+:tags: [hide-input, hide-output]
+
+
 thresh = overall_cm.max() / 2
 cmdf = DataFrame(overall_cm, index = ['Adult','Child'], columns = ['Adult','Child'])
 sns.heatmap(cmdf, cmap='copper')
@@ -342,9 +371,12 @@ for i, j in itertools.product(range(overall_cm.shape[0]), range(overall_cm.shape
                  color="white")
 ```
 
-The model seems to be performing very well. Let's run some null model:
+The imporved model seems to be performing very well. Let's run some null model:
 
 ```{code-cell} python3
+
+:tags: [hide-input, hide-output]
+
 from sklearn.model_selection import permutation_test_score
 score, permutation_score, pvalue = permutation_test_score(
     l_svc, X_train, y_train, cv=3, scoring="accuracy",
@@ -354,7 +386,6 @@ print(f'accuracy {score}, average permutation accuracy {permutation_score.mean()
 
 so, as the classes are balanced, the chance level is close to 50%. The model performs significantly higher than chance.
 
-+++
 
 ## Tweak your model
 
@@ -424,16 +455,29 @@ What do you think about the results of this model compared to the non-transforme
 
 +++
 
-**Exercise:** Try fitting a new SVC model and tweak one of the many parameters. Run cross-validation and see how well it goes. Make a new cell and type SVC? to see the possible hyperparameters
+```{admonition} Exercise
+:class: note
+Try fitting a new SVC model and tweak one of the many parameters. 
+Run cross-validation and see how well it goes. 
+Make a new cell and type SVC? to see the possible hyperparameters
+```
+
+````{admonition} Answer
+:class: dropdown
+
+The SVC model has a parameter `kernel` and there are multiple options.
+
+You can check the documentation to find out more!
+
+````
 
 ```{code-cell} python3
 #l_svc = SVC(kernel='linear') # define the model
 ```
 
 ## Can our model classify children from adults in completely un-seen data?
-Now that we've fit a model that we think has possibly learned how to decode childhood vs adulthood based on rs-fmri signal, let's put it to the test. We will train our model on all the training data, and try to predict the age of the subjects we left out at the beginning of this section.
 
-+++
+Now that we've fit a model that we think has possibly learned how to decode childhood vs adulthood based on resting state fMRI signal, let's put it to the test. We will train our model on all the training data, and try to predict the age of the subjects we left out at the beginning of this section.
 
 Because we performed a transformation on our training data, we will need to transform our testing data using the *same information!*
 
@@ -443,7 +487,7 @@ Because we performed a transformation on our training data, we will need to tran
 X_test_scl = scaler.transform(X_test)
 ```
 
-And now for the moment of truth!
+### And now for the moment of truth!
 
 No cross-validation needed here. We simply fit the model with the training data and use it to predict the testing data
 
