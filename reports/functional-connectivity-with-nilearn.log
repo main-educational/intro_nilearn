@@ -1,0 +1,81 @@
+Traceback (most recent call last):
+  File "/home/haoting/.virtualenvs/intro_ML/lib/python3.7/site-packages/jupyter_cache/executors/utils.py", line 56, in single_nb_execution
+    record_timing=False,
+  File "/home/haoting/.virtualenvs/intro_ML/lib/python3.7/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/haoting/.virtualenvs/intro_ML/lib/python3.7/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/haoting/.virtualenvs/intro_ML/lib/python3.7/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/home/haoting/.pyenv/versions/3.7.14/lib/python3.7/asyncio/base_events.py", line 587, in run_until_complete
+    return future.result()
+  File "/home/haoting/.virtualenvs/intro_ML/lib/python3.7/site-packages/nbclient/client.py", line 664, in async_execute
+    cell, index, execution_count=self.code_cells_executed + 1
+  File "/home/haoting/.virtualenvs/intro_ML/lib/python3.7/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/haoting/.virtualenvs/intro_ML/lib/python3.7/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# change this to the location where you want the data to get downloaded
+data_dir = './nilearn_data'
+# Now fetch the data
+development_dataset = datasets.fetch_development_fmri(n_subjects=150,
+                                                      data_dir=data_dir, 
+                                                      reduce_confounds = False                                                      
+                                                     )
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mHTTPError[0m                                 Traceback (most recent call last)
+[0;32m/tmp/ipykernel_36411/553333737.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      4[0m development_dataset = datasets.fetch_development_fmri(n_subjects=150,
+[1;32m      5[0m                                                       [0mdata_dir[0m[0;34m=[0m[0mdata_dir[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 6[0;31m                                                       [0mreduce_confounds[0m [0;34m=[0m [0;32mFalse[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      7[0m                                                      )
+
+[0;32m~/.virtualenvs/intro_ML/lib/python3.7/site-packages/nilearn/datasets/func.py[0m in [0;36mfetch_development_fmri[0;34m(n_subjects, reduce_confounds, data_dir, resume, verbose, age_group)[0m
+[1;32m   1627[0m                                                            [0murl[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1628[0m                                                            [0mresume[0m[0;34m=[0m[0mresume[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 1629[0;31m                                                            verbose=verbose)
+[0m[1;32m   1630[0m [0;34m[0m[0m
+[1;32m   1631[0m     [0;32mif[0m [0mreduce_confounds[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/.virtualenvs/intro_ML/lib/python3.7/site-packages/nilearn/datasets/func.py[0m in [0;36m_fetch_development_fmri_functional[0;34m(participants, data_dir, url, resume, verbose)[0m
+[1;32m   1499[0m                            {'move': confounds.format(participant_id)})]
+[1;32m   1500[0m         path_to_regressor = _fetch_files(data_dir, regressor_file,
+[0;32m-> 1501[0;31m                                          verbose=verbose)[0]
+[0m[1;32m   1502[0m         [0mregressors[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mpath_to_regressor[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1503[0m         [0;31m# Download bold images[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/.virtualenvs/intro_ML/lib/python3.7/site-packages/nilearn/datasets/utils.py[0m in [0;36m_fetch_files[0;34m(data_dir, files, resume, verbose, session)[0m
+[1;32m    711[0m             return _fetch_files(
+[1;32m    712[0m                 [0mdata_dir[0m[0;34m,[0m [0mfiles[0m[0;34m,[0m [0mresume[0m[0;34m=[0m[0mresume[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 713[0;31m                 verbose=verbose, session=session)
+[0m[1;32m    714[0m     [0;31m# There are two working directories here:[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    715[0m     [0;31m# - data_dir is the destination directory of the dataset[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/.virtualenvs/intro_ML/lib/python3.7/site-packages/nilearn/datasets/utils.py[0m in [0;36m_fetch_files[0;34m(data_dir, files, resume, verbose, session)[0m
+[1;32m    762[0m                                   [0musername[0m[0;34m=[0m[0mopts[0m[0;34m.[0m[0mget[0m[0;34m([0m[0;34m'username'[0m[0;34m,[0m [0;32mNone[0m[0;34m)[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    763[0m                                   [0mpassword[0m[0;34m=[0m[0mopts[0m[0;34m.[0m[0mget[0m[0;34m([0m[0;34m'password'[0m[0;34m,[0m [0;32mNone[0m[0;34m)[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 764[0;31m                                   session=session, overwrite=overwrite)
+[0m[1;32m    765[0m             [0;32mif[0m [0;34m'move'[0m [0;32min[0m [0mopts[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    766[0m                 [0;31m# XXX: here, move is supposed to be a dir, it can be a name[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/.virtualenvs/intro_ML/lib/python3.7/site-packages/nilearn/datasets/utils.py[0m in [0;36m_fetch_file[0;34m(url, data_dir, resume, overwrite, md5sum, username, password, verbose, session)[0m
+[1;32m    600[0m             with session.send(
+[1;32m    601[0m                     prepped, stream=True, timeout=_REQUESTS_TIMEOUT) as resp:
+[0;32m--> 602[0;31m                 [0mresp[0m[0;34m.[0m[0mraise_for_status[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    603[0m                 [0;32mwith[0m [0mopen[0m[0;34m([0m[0mtemp_full_name[0m[0;34m,[0m [0;34m"wb"[0m[0;34m)[0m [0;32mas[0m [0mfh[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    604[0m                     _chunk_read_(resp, fh, report_hook=(verbose > 0),
+
+[0;32m~/.virtualenvs/intro_ML/lib/python3.7/site-packages/requests/models.py[0m in [0;36mraise_for_status[0;34m(self)[0m
+[1;32m   1019[0m [0;34m[0m[0m
+[1;32m   1020[0m         [0;32mif[0m [0mhttp_error_msg[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 1021[0;31m             [0;32mraise[0m [0mHTTPError[0m[0;34m([0m[0mhttp_error_msg[0m[0;34m,[0m [0mresponse[0m[0;34m=[0m[0mself[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   1022[0m [0;34m[0m[0m
+[1;32m   1023[0m     [0;32mdef[0m [0mclose[0m[0;34m([0m[0mself[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mHTTPError[0m: 502 Server Error: Bad Gateway for url: https://files.osf.io/v1/resources/5hju4/providers/osfstorage/5cb47056353c58001c9ac064
+HTTPError: 502 Server Error: Bad Gateway for url: https://files.osf.io/v1/resources/5hju4/providers/osfstorage/5cb47056353c58001c9ac064
+

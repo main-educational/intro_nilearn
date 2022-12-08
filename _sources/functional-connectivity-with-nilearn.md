@@ -194,6 +194,7 @@ Nilearn therefore plays a crucial role in bringing machine learning concepts to 
 To get a sense of the problem, the quickest method is to just look at some data.
 You may have your own data locally that you'd like to work with.
 Nilearn also provides access to several neuroimaging data sets and atlases (we'll talk about these a bit later).
+These datasets are great for developing your analysis workflow and testing new features!
 
 These data sets (and atlases) are only accessible because research groups chose to make their collected data publicly available.
 We owe them a huge thank you for this!
@@ -203,16 +204,16 @@ The nilearn team preprocessed the data set with [fMRIPrep](https://fmriprep.read
 so it'd be easier to work with.
 We can learn a lot about this data set directly [from the Nilearn documentation](https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_development_fmri.html).
 For example, we can see that this data set contains over 150 children and adults watching a short Pixar film.
-Let's download the first 30 participants.
+Let's download the first 5 participants.
 
 ```{code-cell} python3
 :tags: [hide-output]
 # change this to the location where you want the data to get downloaded
 data_dir = './nilearn_data'
 # Now fetch the data
-development_dataset = datasets.fetch_development_fmri(n_subjects=10,
+development_dataset = datasets.fetch_development_fmri(n_subjects=5,
                                                       data_dir=data_dir, 
-                                                      reduce_confounds = False                                                      
+                                                      reduce_confounds = False
                                                      )
 ```
 
@@ -273,7 +274,7 @@ Masking fMRI data.
 ```
 
 Essentially, we can imagine overlaying a 3D grid on an image.
-Then, our mask tells us which cubes or “voxels” (like 3D pixels) to sample from.
+Then, our mask tells us which cubes or "voxels" (like 3D pixels) to sample from.
 Since our Nifti images are 4D files, we can’t overlay a single grid –
 instead, we use a series of 3D grids (one for each volume in the 4D file),
 so we can get a measurement for each voxel at each timepoint.
@@ -320,12 +321,12 @@ Largely we can classify them in two ways:
     - Anatomical atlases use structural land marks to separate regions. Example: [Harvard-Oxford atlas](https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_atlas_harvard_oxford.html)
     - Functional atlases define regions based on the organisation of fMRI signal, such as functional connectivity. Example: [Schaefer atlas](https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html)
 
-- Soft vs hard
+- Probablility vs discrete segmentation 
 
-    - Soft, or probabilistic parcels use contiunous, non-zero values to define regions.
+    - Probabilistic segmentation: use contiunous, non-zero values to define parcels.
     Example: [Difumo (functional)](https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_atlas_difumo.html#nilearn.datasets.fetch_atlas_difumo),
     [Hammersmith (anatomical)](https://pubmed.ncbi.nlm.nih.gov/12874777/)
-    - Hard parcels have rigid boundaries. Example: [BASC (functional)](https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_atlas_basc_multiscale_2015.html#nilearn.datasets.fetch_atlas_basc_multiscale_2015)
+    - Discrete segmentation: parcels that have rigid boundaries. Example: [BASC (functional)](https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_atlas_basc_multiscale_2015.html#nilearn.datasets.fetch_atlas_basc_multiscale_2015)
 
 It's important to understand the method used for constructing the atlas of choice.
 For example, using a anatomical atlas to extract signal from functional data might not be the best thing.
@@ -343,9 +344,9 @@ like a single region of interest.
 
 But what if we actually have several ROIs that we'd like to apply to the data all at once?
 If these ROIs are non-overlapping,
-as in "hard" or deterministic parcellations,
+as in discrete parcellations,
 then we can use [`nilearn.maskers.NiftiLabelsMasker`](https://nilearn.github.io/stable/modules/generated/nilearn.maskers.NiftiLabelsMasker.html).
-Because we're working with "soft" or probabilistic ROIs,
+Because we're working with probabilistic ROIs,
 we can instead supply these ROIs to [`nilearn.maskers.NiftiMapsMasker`](https://nilearn.github.io/stable/modules/generated/nilearn.maskers.NiftiMapsMasker.html).
 
 ```{admonition} Further reading on Maskers
@@ -459,23 +460,18 @@ We can see that there are several different kinds of noise sources included!
 This is actually a subset of all possible fMRIPrep generated confounds that the Nilearn developers have pre-selected.
 For most analyses, this list of confounds is reasonable, so we'll use these Nilearn provided defaults.
 
-````{admonition} New coming feature in NiLearn about confounds
-:class: tip
-
-We could access the full list by passing the argument `reduce_confounds=False` to our original call downloading the `development_dataset`.
-
 ```{warning}
 Never pass the full fMRIPrep confounds to the denoising function.
-```
 
-For your own analyses, make sure to check which confounds you're using!
-In the recent version of nilearn, a new module `nilearn.interfaces.fmriprep` has been added.
-We implemented function [`load_confounds`](https://nilearn.github.io/stable/modules/generated/nilearn.interfaces.fmriprep.load_confounds.html)
+In the recent version of nilearn, 
+we implemented function [`load_confounds`](https://nilearn.github.io/stable/modules/generated/nilearn.interfaces.fmriprep.load_confounds.html)
 and [`load_confounds_strategy`](https://nilearn.github.io/stable/modules/generated/nilearn.interfaces.fmriprep.load_confounds_strategy.html)
 to help you select confound variables based on existing literature and fMRIPrep documentations.
+User can select preset denoising strategies and the function will retrieve the relevant regressors. 
 For more information, please refer to the
 [this nilearn document](https://nilearn.github.io/stable/auto_examples/03_connectivity/plot_signal_extraction.html#sphx-glr-auto-examples-03-connectivity-plot-signal-extraction-py).
-````
+
+```
 
 Importantly, we can pass these confounds directly to our masker object:
 
