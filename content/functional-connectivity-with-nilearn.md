@@ -16,6 +16,8 @@ kernelspec:
 # Functional connectiviy with [`nilearn`](http://nilearn.github.io)
 
 ```{code-cell} python3
+:tags: [hide-input]
+
 import warnings
 warnings.filterwarnings("ignore")
 ```
@@ -58,7 +60,8 @@ Therefore, a typical fMRI file is a 4D image, with the spatial dimensions (x, y,
 We could, for example, acquire 1 brain volume every 2 seconds, for 6 minutes, which would result in an fMRI data file consisting of 180 3D brain volumes.
 
 ```{code-cell} python3
-:tags: [hide-output]
+:tags: [remove-output, hide-input]
+
 import pandas as pd
 import numpy as np
 from nilearn import datasets
@@ -145,7 +148,7 @@ The time series reflects changes in neuronal activity over time indirectly throu
 This activity creates a contrast between oxygenated and deoxygenated blood around a population of neurons detectable by the magnetic field, called the blood-oxygen-level-dependent (BOLD) signal.
 
 ```{code-cell} python3
-:tags: [hide-output]
+:tags: [remove-output, hide-input]
 
 # To get an impulse response, we simulate a single event
 # occurring at time t=0, with duration 1s.
@@ -204,14 +207,14 @@ The nilearn team preprocessed the data set with [fMRIPrep](https://fmriprep.read
 so it'd be easier to work with.
 We can learn a lot about this data set directly [from the Nilearn documentation](https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_development_fmri.html).
 For example, we can see that this data set contains over 150 children and adults watching a short Pixar film.
-Let's download the first 10 participants.
+Let's download the first 5 participants.
 
 ```{code-cell} python3
 :tags: [hide-output]
 # change this to the location where you want the data to get downloaded
 data_dir = './nilearn_data'
 # Now fetch the data
-development_dataset = datasets.fetch_development_fmri(n_subjects=10,
+development_dataset = datasets.fetch_development_fmri(n_subjects=5,
                                                       data_dir=data_dir, 
                                                       reduce_confounds = False
                                                      )
@@ -232,7 +235,7 @@ img.shape
 
 This means that there are 168 volumes, each with a 3D structure of (50, 59, 50).
 
-## Getting into the data: subsetting and viewing
+### Getting into the data: subsetting and viewing
 
 Nilearn also provides many methods for plotting this kind of data.
 For example, we can use [`nilearn.plotting.view_img`](https://nilearn.github.io/stable/modules/generated/nilearn.plotting.view_img.html) to launch at interactive viewer.
@@ -285,7 +288,7 @@ This could correspond to one or many regions of interest.
 Nilearn provides methods to define your own functional parcellation (using clustering algorithms such as _k-means_),
 and it also provides access to other atlases that have previously been defined by researchers.
 
-## Choosing regions of interest
+### Choosing regions of interest
 
 Nilearn ships with several atlases commonly used in the field,
 including the Schaefer atlas and the Harvard-Oxford atlas.
@@ -310,8 +313,8 @@ Because MSDL is a probabilistic atlas, we can view it using:
 plotting.plot_prob_atlas(msdl_atlas.maps)
 ```
 
-````{admonition} Different type of brain parcellation schemes
-:class: note
+::::{admonition} Different type of brain parcellation schemes
+:class: dropdown, seealso
 
 There are various ways of defining brain parcels.
 Largely we can classify them in two ways:
@@ -331,9 +334,10 @@ Largely we can classify them in two ways:
 It's important to understand the method used for constructing the atlas of choice.
 For example, using a anatomical atlas to extract signal from functional data might not be the best thing.
 To find out more, [watch this lecture from Brainhack School by Dr Pierre Bellec on brain parcellation in fMRI](https://www.youtube.com/watch?v=7uMVRebuDZo).
-````
+::::
 
-## A quick side-note on the NiftiMasker zoo
+
+### Applying a Masker object
 
 We'd like to supply these ROIs to a Masker object.
 All Masker objects share the same basic structure and functionality,
@@ -349,15 +353,15 @@ then we can use [`nilearn.maskers.NiftiLabelsMasker`](https://nilearn.github.io/
 Because we're working with probabilistic ROIs,
 we can instead supply these ROIs to [`nilearn.maskers.NiftiMapsMasker`](https://nilearn.github.io/stable/modules/generated/nilearn.maskers.NiftiMapsMasker.html).
 
-```{admonition} Further reading on Maskers
-:class: note
+:::{admonition} Further reading on Maskers
+:class: seealso
 For a full list of the available Masker objects,
 see [the Nilearn documentation](https://nilearn.github.io/stable/modules/maskers.html).
 
 To learn more about the concept, `nilearn` provides a great [tutorial](https://nilearn.github.io/stable/manipulating_images/masker_objects.html).
-```
+:::
 
-## Applying a Masker object
+### Mask your data!
 
 We can supply our MSDL atlas-defined ROIs to the `NiftiMapsMasker` object,
 along with resampling, filtering, and detrending parameters.
@@ -374,7 +378,7 @@ This method may look familiar if you've previously worked with scikit-learn esti
 You'll note that we're not supplying any data to this `.fit` method;
 that's because we're fitting the Masker to the provided ROIs, rather than to our data.
 
-## Dimensions, dimensions
+### Dimensions, dimensions
 
 We can use this fitted masker to transform our data.
 
@@ -460,8 +464,8 @@ We can see that there are several different kinds of noise sources included!
 This is actually a subset of all possible fMRIPrep generated confounds that the Nilearn developers have pre-selected.
 For most analyses, this list of confounds is reasonable, so we'll use these Nilearn provided defaults.
 
-```{warning}
-Never pass the full fMRIPrep confounds to the denoising function.
+:::{admonition} Never pass the full fMRIPrep confounds to the denoising function.
+:class: warning
 
 In the recent version of nilearn, 
 we implemented function [`load_confounds`](https://nilearn.github.io/stable/modules/generated/nilearn.interfaces.fmriprep.load_confounds.html)
@@ -470,8 +474,7 @@ to help you select confound variables based on existing literature and fMRIPrep 
 User can select preset denoising strategies and the function will retrieve the relevant regressors. 
 For more information, please refer to the
 [this nilearn document](https://nilearn.github.io/stable/auto_examples/03_connectivity/plot_signal_extraction.html#sphx-glr-auto-examples-03-connectivity-plot-signal-extraction-py).
-
-```
+:::
 
 Importantly, we can pass these confounds directly to our masker object:
 
@@ -497,6 +500,24 @@ we can see a big difference when including the confounds!
 This is an important reminder to make sure that your data are cleaned of any possible sources of noise _before_ running a machine learning analysis.
 Otherwise, you might be classifying participants on e.g. amount of head motion rather than a feature of interest!
 
+## Exercises!
+
+
+1. Load different atlases and view them!
+
+    - Try to load a different atlas availible through the `nilearn.datasets` module.
+    - Try to show one region of interest. You might need `nilearn.images` module.
+
+2. Masker report!
+
+    Nilearn has added a new feature to generate visualised reports for the masker!
+    [Here](https://nilearn.github.io/stable/manipulating_images/masker_objects.html?highlight=masker+report#visualizing-the-computed-mask) is the relevant section.
+    Try the report function on different type of maskers!
+
+3. Try different options in `plotting.plot_matrix`
+
+    - In a new cell, try this command `plotting.plot_matrix?` to see the full documentation.
+    - See all these options we didn't cover? Try them and see what changes in the figures.
 
 ## References
 
