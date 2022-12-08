@@ -177,8 +177,7 @@ from sklearn.model_selection import train_test_split
 # Split the sample to training/test and
 # stratify by age class, and also shuffle the data.
 
-X_train, X_test, y_train, y_test = train_test_split(
-                                                    X_features, # x
+X_train, X_test, y_train, y_test = train_test_split(X_features, # x
                                                     y_ageclass, # y
                                                     test_size = 0.2, # 80%/20% split  
                                                     shuffle = True, # shuffle dataset
@@ -191,7 +190,7 @@ X_train, X_test, y_train, y_test = train_test_split(
                                                                            # & test sets.
                                                     random_state = 123 # same shuffle each
                                                                        # time
-                                                                       )
+                                                    )
 
 # print the size of our training and test groups
 print('training:', len(X_train),
@@ -285,7 +284,7 @@ for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
                  color="white")
 ```
 
-````{admonition} Exercise
+::::{admonition} Exercise
 :class: warning
 
 You can intepret the confusion matrix accroding to this reference graph.
@@ -295,21 +294,22 @@ You can intepret the confusion matrix accroding to this reference graph.
 HOLY COW! Machine learning is amazing!!! Almost a perfect fit!
 
 ...which means there's something wrong. What's the problem here?
-````
+::::
 
-````{admonition} Solution
+::::{admonition} Solution
 :class: dropdown
 
 The model was not cross validated. 
 
 Scroll down and unfold the cells to see the answer!
 
-````
+::::
 
 ### Fit the model with the training data and cross-validation
 
 ```{code-cell} python3
 :tags: [hide-input, hide-output]
+
 from sklearn.model_selection import cross_val_predict, cross_val_score
 
 # predict
@@ -447,14 +447,14 @@ Run cross-validation and see how well it goes.
 Make a new cell and type SVC? to see the possible hyperparameters
 ```
 
-````{admonition} Answer
+::::{admonition} Answer
 :class: dropdown
 
 The SVC model has a parameter `kernel` and there are multiple options.
 
 You can check the documentation to find out more!
 
-````
+::::
 
 ```{code-cell} python3
 #l_svc = SVC(kernel='linear') # define the model
@@ -506,6 +506,7 @@ The model generalized very well! We may have found something in this data which 
 +++
 
 ## Interpreting model feature importances
+
 Interpreting the feature importances of a machine learning model is a real can of worms. This is an area of active research. Unfortunately, it's hard to trust the feature importance of some models.
 
 You can find a whole tutorial on this subject here:
@@ -566,7 +567,7 @@ plotting.plot_connectome(feat_exp_matrix, coords, colorbar=True)
 Whoa!! That's...a lot to process. Maybe let's threshold the edges so that only the most important connections are visualized
 
 ```{code-cell} python3
-plotting.plot_connectome(feat_exp_matrix, coords, colorbar=True, edge_threshold=0.001)
+plotting.plot_connectome(feat_exp_matrix, coords, colorbar=True, edge_threshold=0.005)
 ```
 
 That's definitely an improvement, but it's still a bit hard to see what's going on.
@@ -582,3 +583,9 @@ You can choose to open the figure in a browser with the following lines:
 # view = plotting.view_connectome(feat_exp_matrix, coords, edge_threshold='90%')
 # view.open_in_browser()
 ```
+
+## Exercises
+
+1. We walked through a lot of mistakes in this tutorial, try to start a fresh notebook and create a clean, and correct version of the workflow.
+2. Try other atlases - does a different atlas change the results?
+3. Advanced - try to implement different atlases as part of the [parameter tuning](https://scikit-learn.org/stable/modules/grid_search.html). 

@@ -359,6 +359,11 @@ title="Print to PDF"
    Interpreting model feature importances
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -437,6 +442,11 @@ title="Print to PDF"
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#interpreting-model-feature-importances">
    Interpreting model feature importances
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
   </a>
  </li>
 </ul>
@@ -940,8 +950,7 @@ Specifically, we will stratify by age class.</p>
 <span class="c1"># Split the sample to training/test and</span>
 <span class="c1"># stratify by age class, and also shuffle the data.</span>
 
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-                                                    <span class="n">X_features</span><span class="p">,</span> <span class="c1"># x</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_features</span><span class="p">,</span> <span class="c1"># x</span>
                                                     <span class="n">y_ageclass</span><span class="p">,</span> <span class="c1"># y</span>
                                                     <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="c1"># 80%/20% split  </span>
                                                     <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="c1"># shuffle dataset</span>
@@ -954,7 +963,7 @@ Specifically, we will stratify by age class.</p>
                                                                            <span class="c1"># &amp; test sets.</span>
                                                     <span class="n">random_state</span> <span class="o">=</span> <span class="mi">123</span> <span class="c1"># same shuffle each</span>
                                                                        <span class="c1"># time</span>
-                                                                       <span class="p">)</span>
+                                                    <span class="p">)</span>
 
 <span class="c1"># print the size of our training and test groups</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;training:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span>
@@ -1429,7 +1438,7 @@ weighted avg       1.00      1.00      1.00        14
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fde1d09e350&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1ec4d1a250&gt;
 </pre></div>
 </div>
 <img alt="_images/machine-learning-with-nilearn_64_1.png" src="_images/machine-learning-with-nilearn_64_1.png" />
@@ -1452,7 +1461,7 @@ weighted avg       1.00      1.00      1.00        14
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._projectors.OrthoProjector at 0x7fde1d4bb6d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._projectors.OrthoProjector at 0x7f1ec40c1d90&gt;
 </pre></div>
 </div>
 <img alt="_images/machine-learning-with-nilearn_68_1.png" src="_images/machine-learning-with-nilearn_68_1.png" />
@@ -1461,12 +1470,12 @@ weighted avg       1.00      1.00      1.00        14
 <p>Whoa!! That’s…a lot to process. Maybe let’s threshold the edges so that only the most important connections are visualized</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_connectome</span><span class="p">(</span><span class="n">feat_exp_matrix</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edge_threshold</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_connectome</span><span class="p">(</span><span class="n">feat_exp_matrix</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edge_threshold</span><span class="o">=</span><span class="mf">0.005</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._projectors.OrthoProjector at 0x7fde053d3a50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._projectors.OrthoProjector at 0x7f1eb08122d0&gt;
 </pre></div>
 </div>
 <img alt="_images/machine-learning-with-nilearn_70_1.png" src="_images/machine-learning-with-nilearn_70_1.png" />
@@ -1856,6 +1865,14 @@ function decodeHemisphere(surfaceInfo, surface, hemisphere){
 </div>
 </div>
 </div>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>We walked through a lot of mistakes in this tutorial, try to start a fresh notebook and create a clean, and correct version of the workflow.</p></li>
+<li><p>Try other atlases - does a different atlas change the results?</p></li>
+<li><p>Advanced - try to implement different atlases as part of the <a class="reference external" href="https://scikit-learn.org/stable/modules/grid_search.html">parameter tuning</a>.</p></li>
+</ol>
 </section>
 </section>
 
