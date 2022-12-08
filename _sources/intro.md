@@ -1,5 +1,11 @@
 # Introduction
 
+```{figure} ../images/nilearn-logo.png
+---
+height: 250px
+---
+```
+
 These two tutorials will introduce you to the [nilearn](https://nilearn.github.io/stable/index.html) 
 library to manipulate and process fMRI data, and to [scikit-learn](https://scikit-learn.org/stable/) 
 to apply machine learning techniques on your data.
@@ -9,9 +15,20 @@ educational workshop](https://main-educational.github.io) in [November 2021](htt
 
 ## Setup
 
-There are two ways to run the tutorials: local installation and Binder.
+### I know how to use Python, just give me the thing
 
-### Local installation (Recommended)
+You can download the jupyter notebook with the download icon on the top right of each page. 
+Here's the basic requirements you need to install:
+
+```
+nilearn
+matplotlib
+seaborn
+jupyter-book
+```
+
+
+### I need more step by step help....
 
 ::::{note}
 
@@ -62,15 +79,6 @@ is a quick guide to install python 3 on any OS.
     ```
     Click on the `.md` files. They will be rendered as jupyter notebooks 🎉
 
-### Binder 
-
-If you wish to run the tutorial in Binder, click on the rocket icon to launch the notebook 🚀
-
-```{warning}
-The computing resource on Binder is limited. 
-Some cells might not execute correctly, or the data download will not be completed.
-For the full experience, we recommend using the local set up instruction.
-```
 
 ## Acknowledgements
 
