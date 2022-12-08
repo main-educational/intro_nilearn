@@ -14,6 +14,7 @@ kernelspec:
 ---
 
 ```{code-cell} python3
+:tags: [hide-input]
 # Let's keep our notebook clean, so it's a little more readable!
 import warnings
 warnings.filterwarnings('ignore')
@@ -24,8 +25,6 @@ warnings.filterwarnings('ignore')
 We will integrate what we've learned in the previous sections to extract data from *several* resting state fMRI images, and use that data as features in a machine learning model.
 
 The dataset consists of children (ages 3-13) and young adults (ages 18-39). We will use resting state fMRI data to try to predict who are adults and who are children.
-
-+++
 
 ## Load the data
 
@@ -51,21 +50,21 @@ How many individual subjects do we have?
 len(data)
 ```
 
-## Get Y (our target) and assess its distribution
+### Get Y (our target) and assess its distribution
 
 ```{code-cell} python3
 # Let's load the phenotype data
 import pandas as pd
 
 pheno = pd.DataFrame(development_dataset.phenotypic)
-pheno.head(40)
+pheno.head(4)
 ```
 
 Looks like there is a column labeling children and adults. Let's capture it in a variable
 
 ```{code-cell} python3
 y_ageclass = pheno['Child_Adult']
-y_ageclass.head()
+y_ageclass.unique()
 ```
 
 Let's have a look at the distribution of our target variable
@@ -85,9 +84,7 @@ pheno = pheno.head(66)
 y_ageclass = pheno['Child_Adult']
 ```
 
-## Extract features
-
-+++
+### Extract features with nilearn masker
 
 Here, we are going to use the same techniques we learned in the previous tutorial to extract resting state fMRI connectivity features from every subject. Let's reload our atlas, and re-initiate our masker and correlation_measure.
 
@@ -112,8 +109,6 @@ correlation_measure = ConnectivityMeasure(kind='correlation', vectorize=True,
 ```
 
 Okay -- now that we have that taken care of, let's load all of the data!
-
-+++
 
 **NOTE**: On a laptop, this might take a few minutes.
 
@@ -153,8 +148,6 @@ X_features.shape
 
 Okay so we've got our features.
 
-+++
-
 We can visualize our feature matrix
 
 ```{code-cell} python3
@@ -169,11 +162,9 @@ plt.ylabel('subjects')
 
 ## Prepare data for machine learning
 
-Here, we will define a "training sample" where we can play around with our models. We will also set aside a "test" sample that we will not touch until the end.
+Here, we will define a **training sample** where we can play around with our models. We will also set aside a **test** sample that we will not touch until the end.
 
-+++
-
-We want to be sure that our training and test sample are matched! We can do that with a "stratified split". 
+We want to be sure that our training and test sample are matched! We can do that with a **stratified split**. 
 Specifically, we will stratify by age class.
 
 ```{code-cell} python3
@@ -227,12 +218,10 @@ While this may seem unambitious, simple models can be very robust. And we don't 
 For more information, see this excellent resource:
 https://hal.inria.fr/hal-01824205
 
-+++
 
 First, a quick review of SVM!
 ![](https://docs.opencv.org/2.4/_images/optimal-hyperplane.png)
 
-+++
 
 Let's fit our first model!
 
@@ -334,7 +323,6 @@ acc = cross_val_score(l_svc, X_train, y_train,
 We can look at the accuracy of the predictions for each fold of the cross-validation
 
 ```{code-cell} python3
-
 :tags: [hide-input, hide-output]
 
 for i in range(len(acc)):
@@ -344,7 +332,6 @@ for i in range(len(acc)):
 We can also look at the overall accuracy of the model
 
 ```{code-cell} python3
-
 :tags: [hide-input, hide-output]
 
 from sklearn.metrics import accuracy_score
@@ -356,9 +343,7 @@ print(overall_cr)
 ```
 
 ```{code-cell} python3
-
 :tags: [hide-input, hide-output]
-
 
 thresh = overall_cm.max() / 2
 cmdf = DataFrame(overall_cm, index = ['Adult','Child'], columns = ['Adult','Child'])
@@ -374,7 +359,6 @@ for i, j in itertools.product(range(overall_cm.shape[0]), range(overall_cm.shape
 The imporved model seems to be performing very well. Let's run some null model:
 
 ```{code-cell} python3
-
 :tags: [hide-input, hide-output]
 
 from sklearn.model_selection import permutation_test_score
@@ -457,6 +441,7 @@ What do you think about the results of this model compared to the non-transforme
 
 ```{admonition} Exercise
 :class: note
+
 Try fitting a new SVC model and tweak one of the many parameters. 
 Run cross-validation and see how well it goes. 
 Make a new cell and type SVC? to see the possible hyperparameters

@@ -19,14 +19,18 @@ nbclient.exceptions.CellExecutionError: An error occurred while executing the fo
 ------------------
 :tags: [hide-input, hide-output]
 
-for i in range(len(acc)):
-    print('Fold %s -- Acc = %s'%(i, acc[i]))
+from sklearn.metrics import accuracy_score
+overall_acc = accuracy_score(y_pred = y_pred, y_true = y_train)
+overall_cr = classification_report(y_pred = y_pred, y_true = y_train)
+overall_cm = confusion_matrix(y_pred = y_pred, y_true = y_train)
+print('Accuracy:',overall_acc)
+print(overall_cr)
 ------------------
 
-[0;36m  File [0;32m"/tmp/ipykernel_59661/441921491.py"[0;36m, line [0;32m1[0m
+[0;36m  File [0;32m"/tmp/ipykernel_25864/194946283.py"[0;36m, line [0;32m1[0m
 [0;31m    :tags: [hide-input, hide-output][0m
 [0m    ^[0m
 [0;31mSyntaxError[0m[0;31m:[0m invalid syntax
 
-SyntaxError: invalid syntax (441921491.py, line 1)
+SyntaxError: invalid syntax (194946283.py, line 1)
 
