@@ -1,14 +1,14 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: "MAIN2022: Machine learning in functional MRI using Nilearn" 
-author:  Yasmin Mzayek, Hao-Ting Wang
+title: "Machine learning in functional MRI using Nilearn" 
+author: 
 copyright: "2022" 
 logo: "../images/nilearn-logo.png" 
 
 execute:
   execute_notebooks: force
-  timeout: 600
+  timeout: -1
 
 # Add a bibtex file so that we can create citations
 bibtex_bibfiles:
@@ -29,7 +29,7 @@ html:
 
 launch_buttons:
   notebook_interface        : classic  # The interface interactive links will activate ["classic", "jupyterlab"]
-  binderhub_url             : ""  # The URL of the BinderHub (e.g., https://mybinder.org)
+  binderhub_url             : "https://mybinder.org"  # The URL of the BinderHub (e.g., https://mybinder.org)
   jupyterhub_url            : ""  # The URL of the JupyterHub (e.g., https://datahub.berkeley.edu)
   thebe                     : false  # Add a thebe button to pages (requires the repository to run on Binder)
   colab_url                 : "" # The URL of Google Colab (https://colab.research.google.com)
