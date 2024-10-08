@@ -587,5 +587,6 @@ You can choose to open the figure in a browser with the following lines:
 ## Exercises
 
 1. We walked through a lot of mistakes in this tutorial, try to start a fresh notebook and create a clean, and correct version of the workflow.
-2. Try other atlases - does a different atlas change the results?
-3. Advanced - try to implement different atlases as part of the [parameter tuning](https://scikit-learn.org/stable/modules/grid_search.html). 
+2. The dataset contains the exact age of the subjects. Try to predict the age of the subjects instead of the age class. Hint - use regression instead of classification.
+3. Try other atlases - does a different atlas change the results?
+4. Advanced - try to implement different atlases as part of the [parameter tuning](https://scikit-learn.org/stable/modules/grid_search.html). 
