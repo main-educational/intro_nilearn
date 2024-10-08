@@ -83,13 +83,14 @@ is a quick guide to install python 3 on any OS.
 ## Acknowledgements
 
 This tutorial is presented by 
-[Yasmin Mzayek](https://github.com/ymzayek),
-and [Hao-Ting Wang](https://github.com/htwangtw).
+[Hao-Ting Wang](https://github.com/htwangtw),
+and [Himanshu Aggarwal](https://github.com/man-shu).
 
 It is rendered here using [Jupyter Book](https://github.com/jupyter/jupyter-book),
 <!-- with compute infrastructure provided by the [Canadian Open Neuroscience Platform (CONP)](http://conp.ca). -->
 
-The content of notebook was iterated based on work from the past presentors:
+The content of notebook was iterated based on work from the past presenters:
+[Yasmin Mzayek](https://github.com/ymzayek),
 [François Paugam](https://github.com/FrancoisPgm),
 [Pierre Bellec](https://simexp.github.io/lab-website/),
 [Elizabeth DuPre](https://elizabeth-dupre.com),

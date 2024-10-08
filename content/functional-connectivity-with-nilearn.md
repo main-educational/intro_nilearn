@@ -13,7 +13,7 @@ kernelspec:
   name: python3
 ---
 
-# Functional connectiviy with [`nilearn`](http://nilearn.github.io)
+# Functional connectivity with [`nilearn`](http://nilearn.github.io)
 
 ```{code-cell} python3
 :tags: [hide-input]
@@ -103,7 +103,7 @@ def explode(data):
 # Initialise a figure
 fig = plt.figure(figsize=(10,3))
 
-# Visuallise the voxel
+# Visualise the voxel
 ax1 = fig.add_subplot(1, 2, 1, projection='3d')
 ax1.set_xlabel("x")
 ax1.set_ylabel("y")
